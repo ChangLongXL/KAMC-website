@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAMC 键鼠控制器</title>
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .title-area {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        .title-area h1 {
+            font-size: 2rem;
+            letter-spacing: .15em;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: pureFadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes pureFadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.15);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: inherit;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: rgba(88, 166, 255, 0.1);
+            box-shadow: 0 0 12px rgba(88, 166, 255, 0.3);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            
+            .title-area {
+                margin-top: 25px;
+            }
+            
+            .title-area h1 {
+                font-size: 1.5rem;
+                letter-spacing: .1em;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .card h2 {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title-area">
+        <h1>KAMC 键鼠控制器</h1>
+    </div>
+    <p class="subtitle fade-in">用 Python 重构的硬核效率工具</p>
+
+    <div class="card fade-in">
+        <h2>// 关于 KAMC</h2>
+        <p>美观、易上手、功能强大的键鼠控制器。目前已获得超过 3 万次下载，深受用户喜爱。2.0.0 版本正在用 C++ 与 Qt 重构中。</p>
+        <a href="#" class="btn" onclick="alert('这里是跳转到外链下载的按钮')">立即下载 (v1.3.1)</a>
+    </div>
+
+    <div class="card fade-in">
+        <h2>// 核心特性</h2>
+        <p>1. 极简的 Win11 终端风格界面<br>2. 完全本地运行，不依赖云端<br>3. 开源免费，欢迎社区贡献</p>
+    </div>
+
+    <div class="card fade-in">
+        <h2>// 附属工具</h2>
+        <p>Minecraft Java 附魔计算器 — 精准计算最优经验等级组合，已经发布 v1.0 版本。</p>
+        <a href="#" class="btn" onclick="alert('跳转到附魔计算器下载链接')">查看工具</a>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 昌龙XL | kamc.top</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const elements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+    });
+</script>
+
+</body>
+</html>
