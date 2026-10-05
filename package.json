@@ -1,0 +1,9 @@
+{
+  "name": "kamc-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "echo 'Static site, no build needed'",
+    "preview": "echo 'Static site, no preview needed'"
+  }
+}
