@@ -6,212 +6,667 @@
     <title>KAMC 键鼠控制器</title>
     <link rel="icon" href="favicon.png" type="image/x-icon">
     <style>
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --accent: #58a6ff;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Consolas', sans-serif;
+        }
+
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
 
         body {
-            font-family: 'Consolas', 'Courier New', monospace;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 20px;
+            background-color: #ffffff;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            height: 80px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); 
+            z-index: 100;
+            position: relative;
+        }
+
+        .navbar-logo {
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo img {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-desktop {
+            margin-left: -20px;
+        }
+
+        .logo-mobile {
+            display: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 40px; 
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: #222222;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 12px 28px;
+            border-radius: 10px;
+            transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .navbar-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 28px;
+            width: 0;
+            height: 2px;
+            background-color: currentColor;
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .navbar-links a:hover::after {
+            width: calc(100% - 56px);
+        }
+
+        .nav-home:hover { color: #0055cc; background-color: rgba(0, 85, 204, 0.08); }
+        .nav-download:hover { color: #10b981; background-color: rgba(16, 185, 129, 0.08); }
+        .nav-faq:hover { color: #d97706; background-color: rgba(217, 119, 6, 0.08); }
+        .nav-sponsor:hover { color: #dc3545; background-color: rgba(220, 53, 69, 0.08); }
+
+        .nav-home.active { color: #0055cc; }
+        .nav-download.active { color: #10b981; }
+        .nav-faq.active { color: #d97706; }
+        .nav-sponsor.active { color: #dc3545; }
+
+        .navbar-links a.active::after {
+            width: calc(100% - 56px);
+        }
+
+        .hamburger {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.3s ease;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .hamburger:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background-color: #222222;
+            border-radius: 2px;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .scroll-container {
+            flex: 1;
+            width: 100%;
+            overflow-y: auto;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        .title-area {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 10px;
+        .scroll-container::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .title-area h1 {
-            font-size: 2rem;
-            letter-spacing: .15em;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
-            opacity: 0;
-            transform: translateY(10px);
-            animation: pureFadeIn 1.2s ease-out forwards;
+        .scroll-container::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        @keyframes pureFadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .scroll-container {
+            scrollbar-width: thin;
+            scrollbar-color: #d1d5db transparent;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        .main-content {
+            flex: 1;
+            width: 100%;
+            position: relative;
         }
 
-        .subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 0.9rem;
+        .page {
+            display: none;
+            width: 100%;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.6; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            background-color: #ffffff; 
+        }
+
+        .hero-banner img {
+            width: 100%;
+            display: block;
+            min-height: 450px;
+            object-fit: cover;
+            background-color: #ffffff; 
+        }
+
+        .floating-cards {
+            position: absolute;
+            right: 40px;          
+            top: 40px;            
+            display: flex;
+            flex-direction: column;
+            gap: 30px;            
+            width: 400px;         
+            z-index: 10;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 40px 30px;    
+            font-size: 1rem;       
+            font-weight: normal;   
+            color: #333333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); 
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            min-height: 200px;     
         }
 
         .card:hover {
             transform: translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.15);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
         }
 
-        .card h2 {
+        .card h3 {
             font-size: 1.2rem;
             margin-bottom: 10px;
-            color: #fff;
+            color: #111111;
+            font-weight: normal; 
         }
 
         .card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
+            line-height: 1.6;
+            color: #555555;
+            margin-bottom: 20px;
         }
 
-        .btn {
+        .card-btn {
             display: inline-block;
-            background-color: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
+            background-color: #0055cc;
+            color: #ffffff;
+            text-decoration: none;
             padding: 10px 20px;
             border-radius: 6px;
-            text-decoration: none;
-            font-family: inherit;
-            cursor: pointer;
-            font-size: 0.95rem;
-            margin-top: 15px;
-            transition: all 0.2s ease;
             text-align: center;
+            transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 1rem;
+            align-self: flex-start; 
+            cursor: pointer;
         }
 
-        .btn:hover {
-            background-color: rgba(88, 166, 255, 0.1);
-            box-shadow: 0 0 12px rgba(88, 166, 255, 0.3);
+        .card-btn:hover {
+            background-color: #0044aa;
         }
 
-        .btn:active {
-            transform: scale(0.97);
+        .other-page-content {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .other-page-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #111;
+        }
+
+        .other-page-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
         }
 
         .footer {
+            padding: 20px 20px 40px 20px;
             text-align: center;
-            margin-top: 40px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-            
-            .title-area {
-                margin-top: 25px;
-            }
-            
-            .title-area h1 {
-                font-size: 1.5rem;
-                letter-spacing: .1em;
+        .footer-divider {
+            height: 1px;
+            background-color: #eaeaea;
+            width: 100%;
+            margin-top: 100px;
+            margin-bottom: 30px;
+        }
+
+        .footer p {
+            color: #888888;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .footer a {
+            color: #0055cc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #0044aa;
+            text-decoration: underline;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.6; 
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.5s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s;
+        }
+
+        .modal-overlay.closing {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.5s;
+        }
+
+        .modal-box {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 35px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            opacity: 0.6;
+            transform: scale(0.95) translateY(6px);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .modal-overlay.active .modal-box {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-overlay.closing .modal-box {
+            opacity: 0;
+            transform: scale(0.95) translateY(6px);
+        }
+
+        .modal-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .modal-box p {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-buttons button {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            font-family: inherit;
+            border: none;
+            outline: none;
+            font-weight: bold;
+        }
+
+        .btn-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-confirm {
+            background-color: #0055cc;
+            color: #ffffff;
+        }
+
+        .btn-confirm:hover {
+            background-color: #0044aa;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 0 20px;
+                height: 64px;
+                position: relative;
             }
 
-            .card {
-                padding: 15px;
+            .navbar-logo {
+                height: 40px;
             }
 
-            .card h2 {
-                font-size: 1.1rem;
+            .logo-desktop {
+                display: none;
+                margin-left: 0;
             }
 
-            .btn {
+            .logo-mobile {
                 display: block;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .navbar-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
                 width: 100%;
-                padding: 12px;
-                font-size: 1rem;
+                background-color: #ffffff;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                padding: 0 20px;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1), padding 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .navbar-links.open {
+                max-height: 500px;
+                padding: 15px 20px 25px 20px;
+            }
+
+            .navbar-links a {
+                font-size: 1.1rem;
+                padding: 14px 16px;
+                border-radius: 8px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar-links a::after {
+                display: none;
+            }
+
+            .scroll-container {
+                height: calc(100vh - 64px);
+            }
+
+            .hero-banner img {
+                min-height: 200px;
+            }
+            .floating-cards {
+                position: static;
+                width: 100%;
+                padding: 20px;
+                gap: 15px;
+            }
+            .card { 
+                padding: 25px 20px; 
+                min-height: auto;
+            }
+            .card-btn {
+                width: 100%; 
+                align-self: stretch;
+            }
+            .other-page-content {
+                margin: 30px auto;
+            }
+            .footer-divider {
+                margin-top: 60px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="title-area">
-        <h1>KAMC 键鼠控制器</h1>
-    </div>
-    <p class="subtitle fade-in">用 Python 重构的硬核效率工具</p>
+    <header class="navbar">
+        <div class="navbar-logo">
+            <img src="./official_website_logo.png" alt="KAMC 官网" class="logo-desktop">
+            <img src="./logo512.png" alt="KAMC 官网" class="logo-mobile">
+        </div>
 
-    <div class="card fade-in">
-        <h2>// 关于 KAMC</h2>
-        <p>美观、易上手、功能强大的键鼠控制器。目前已获得超过 3 万次下载，深受用户喜爱。2.0.0 版本正在用 C++ 与 Qt 重构中。</p>
-        <a href="#" class="btn" onclick="alert('这里是跳转到外链下载的按钮')">立即下载 (v1.3.1)</a>
-    </div>
-
-    <div class="card fade-in">
-        <h2>// 核心特性</h2>
-        <p>1. 极简的 Win11 终端风格界面<br>2. 完全本地运行，不依赖云端<br>3. 开源免费，欢迎社区贡献</p>
-    </div>
-
-    <div class="card fade-in">
-        <h2>// 附属工具</h2>
-        <p>Minecraft Java 附魔计算器 — 精准计算最优经验等级组合，已经发布 v1.0 版本。</p>
-        <a href="#" class="btn" onclick="alert('跳转到附魔计算器下载链接')">查看工具</a>
-    </div>
-
-    <div class="footer">
-        <p>© 2026 昌龙XL | kamc.top</p>
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const elements = document.querySelectorAll('.fade-in');
+        <button class="hamburger" onclick="toggleMenu(this)" aria-label="菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+        <nav class="navbar-links" id="navMenu">
+            <a onclick="switchPage('home', this)" class="nav-home active">首页</a>
+            <a onclick="switchPage('downloads', this)" class="nav-download">下载</a>
+            <a onclick="switchPage('faq', this)" class="nav-faq">常见问题</a>
+            <a onclick="switchPage('sponsor', this)" class="nav-sponsor">赞助</a>
+        </nav>
+    </header>
 
-        elements.forEach(element => {
-            observer.observe(element);
+    <div class="scroll-container" id="main-scroller">
+        <main class="main-content">
+
+            <div id="page-home" class="page active">
+                <div class="hero-banner">
+                    <img src="./promotional_image.png" alt="KAMC 宣传图">
+
+                    <div class="floating-cards">
+                        <div class="card">
+                            <div>
+                                <h3>KAMC 键鼠控制器</h3>
+                                <p>一款美观、易上手、功能强大的键鼠效率工具。目前已获得超过 3 万次下载，2.0.0 版本正在用 C++ 与 Qt 重构中。</p>
+                            </div>
+                            <a onclick="showDownloadModal()" class="card-btn">立即下载 (v1.3.1)</a>
+                        </div>
+
+                        <div class="card">
+                            <div>
+                                <h3>公告与通知</h3>
+                                <p>这里是公告或新闻区域。最终这里发布最新的开发进度、活动信息或赞助商广告。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-downloads" class="page">
+                <div class="other-page-content">
+                    <h2>下载中心</h2>
+                    <p>这里是下载页面的内容，后续将陆续在这里添加历史版本或其他小工具</p>
+                </div>
+            </div>
+
+            <div id="page-faq" class="page">
+                <div class="other-page-content">
+                    <h2>常见问题</h2>
+                    <p>这里是常见问题页面的内容。</p>
+                </div>
+            </div>
+
+            <div id="page-sponsor" class="page">
+                <div class="other-page-content">
+                    <h2>赞助支持</h2>
+                    <p>这里是赞助页面的内容。</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer-divider"></div>
+            <p>© 2026 昌龙XL | kamc.top</p>
+            <p>Bilibili: <a href="https://space.bilibili.com/3461574912117204" target="_blank">@昌龙XL</a></p>
+            <p>Keyboard and mouse controller 2022-2026</p>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-box">
+            <h3>即将跳转至蓝奏云</h3>
+            <p>您即将离开本站，前往蓝奏云分享页面下载 KAMC v1.3.1。是否继续？</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeDownloadModal()">取消</button>
+                <button class="btn-confirm" onclick="confirmDownload()">前往下载</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(btn) {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('open');
+            btn.classList.toggle('open');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('navMenu');
+            const btn = document.querySelector('.hamburger');
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                btn.classList.remove('open');
+            }
+        }
+
+        function switchPage(pageId, element) {
+            const navLinks = document.querySelectorAll('.navbar-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (element) {
+                element.classList.add('active');
+            } else {
+                const targetNav = document.querySelector('.nav-' + pageId);
+                if (targetNav) targetNav.classList.add('active');
+            }
+
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            const scroller = document.getElementById('main-scroller');
+            scroller.scrollTo({ top: 0, behavior: 'smooth' });
+            closeMenu();
+        }
+
+        function showDownloadModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.classList.remove('closing');
+            modal.classList.add('active');
+        }
+
+        function closeDownloadModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.classList.add('closing');
+            
+            setTimeout(() => {
+                modal.classList.remove('active');
+                modal.classList.remove('closing');
+            }, 500);
+        }
+
+        function confirmDownload() {
+            window.open('https://wwawn.lanzouw.com/it2qW2bbdn3e', '_blank');
+            closeDownloadModal();
+        }
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 900) {
+                closeMenu();
+            }
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
