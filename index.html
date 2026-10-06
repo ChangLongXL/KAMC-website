@@ -28,19 +28,19 @@
 
         .navbar {
             background-color: #ffffff;
-            height: clamp(76px, 6.5vw, 92px); 
+            height: clamp(76px, 6.5vw, 92px);
             flex-shrink: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 clamp(20px, 2vw, 36px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
             z-index: 100;
             position: relative;
         }
 
         .navbar-logo {
-            height: clamp(54px, 6.2vw, 68px); 
+            height: clamp(54px, 6.2vw, 68px);
             display: flex;
             align-items: center;
         }
@@ -60,7 +60,7 @@
 
         .navbar-links {
             display: flex;
-            gap: clamp(24px, 2.5vw, 38px); 
+            gap: clamp(24px, 2.5vw, 38px);
         }
 
         .navbar-links a {
@@ -68,8 +68,7 @@
             color: #222222;
             font-size: clamp(1.4rem, 1.8vw, 1.6rem);
             font-weight: bold;
-            /* 垂直高度降2px，水平宽度严格不变 */
-            padding: clamp(10px, 1.2vw, 14px) clamp(24px, 2.4vw, 34px); 
+            padding: clamp(10px, 1.2vw, 14px) clamp(24px, 2.4vw, 34px);
             border-radius: 10px;
             transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
@@ -88,7 +87,7 @@
         }
 
         .navbar-links a:hover::after {
-            width: calc(100% - (clamp(24px, 2.4vw, 34px) * 2)); 
+            width: calc(100% - (clamp(24px, 2.4vw, 34px) * 2));
         }
 
         .nav-home:hover { color: #0055cc; background-color: rgba(0, 85, 204, 0.08); }
@@ -201,7 +200,7 @@
         .hero-banner {
             position: relative;
             width: 100%;
-            background-color: #ffffff; 
+            background-color: #ffffff;
         }
 
         .hero-banner img {
@@ -209,17 +208,17 @@
             display: block;
             min-height: clamp(350px, 38vw, 450px);
             object-fit: cover;
-            background-color: #ffffff; 
+            background-color: #ffffff;
         }
 
         .floating-cards {
             position: absolute;
-            right: clamp(30px, 3.5vw, 40px); 
-            top: clamp(30px, 3.5vw, 40px); 
+            right: clamp(30px, 3.5vw, 40px);
+            top: clamp(30px, 3.5vw, 40px);
             display: flex;
             flex-direction: column;
-            gap: clamp(20px, 2.5vw, 30px); 
-            width: clamp(340px, 32vw, 400px); 
+            gap: clamp(20px, 2.5vw, 30px);
+            width: clamp(340px, 32vw, 400px);
             z-index: 10;
         }
 
@@ -227,15 +226,15 @@
             background-color: #ffffff;
             border-radius: 12px;
             padding: clamp(30px, 3.5vw, 40px) clamp(25px, 2.8vw, 30px);
-            font-size: 1rem; 
-            font-weight: normal;   
+            font-size: 1rem;
+            font-weight: normal;
             color: #333333;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
             display: flex;
             flex-direction: column;
-            justify-content: space-between; 
-            min-height: clamp(180px, 17vw, 200px); 
+            justify-content: space-between;
+            min-height: clamp(180px, 17vw, 200px);
         }
 
         .card:hover {
@@ -247,7 +246,7 @@
             font-size: 1.2rem;
             margin-bottom: 10px;
             color: #111111;
-            font-weight: normal; 
+            font-weight: normal;
         }
 
         .card p {
@@ -266,7 +265,7 @@
             text-align: center;
             transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             font-size: 1rem;
-            align-self: flex-start; 
+            align-self: flex-start;
             cursor: pointer;
         }
 
@@ -335,7 +334,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            opacity: 0.6; 
+            opacity: 0.6;
             visibility: hidden;
             transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.5s;
         }
@@ -485,26 +484,34 @@
             }
 
             .hero-banner img {
-                min-height: 250px;
+                display: none;
             }
-            
+
+            .hero-banner {
+                padding-top: 20px;
+            }
+
             .floating-cards {
                 position: static;
                 width: 100%;
                 padding: 20px;
                 gap: 15px;
             }
-            .card { 
-                padding: 25px 20px; 
+
+            .card {
+                padding: 25px 20px;
                 min-height: auto;
             }
+
             .card-btn {
-                width: 100%; 
+                width: 100%;
                 align-self: stretch;
             }
+
             .other-page-content {
                 margin: 30px auto;
             }
+
             .footer-divider {
                 margin-top: 60px;
             }
@@ -519,12 +526,12 @@
             <img src="./logo512.png" alt="KAMC 官网" class="logo-mobile">
         </div>
 
-        <button class="hamburger" onclick="toggleMenu(this)" aria-label="菜单">
+        <button class="hamburger" onclick="toggleMenu(this)" aria-label="菜单" aria-expanded="false">
             <span></span>
             <span></span>
             <span></span>
         </button>
-        
+
         <nav class="navbar-links" id="navMenu">
             <a onclick="switchPage('home', this)" class="nav-home active">首页</a>
             <a onclick="switchPage('downloads', this)" class="nav-download">下载</a>
@@ -602,27 +609,34 @@
     </div>
 
     <script>
+        let modalCloseTimer = null;
+
         function toggleMenu(btn) {
             const menu = document.getElementById('navMenu');
-            menu.classList.toggle('open');
-            btn.classList.toggle('open');
+            const isOpen = menu.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
 
         function closeMenu() {
             const menu = document.getElementById('navMenu');
             const btn = document.querySelector('.hamburger');
+            if (!menu || !btn) return;
             if (menu.classList.contains('open')) {
                 menu.classList.remove('open');
                 btn.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
             }
         }
 
         function switchPage(pageId, element) {
-            const navLinks = document.querySelectorAll('.navbar-links a');
-            navLinks.forEach(link => {
+            const targetPage = document.getElementById('page-' + pageId);
+            if (!targetPage) return;
+
+            document.querySelectorAll('.navbar-links a').forEach(link => {
                 link.classList.remove('active');
             });
-            
+
             if (element) {
                 element.classList.add('active');
             } else {
@@ -630,30 +644,41 @@
                 if (targetNav) targetNav.classList.add('active');
             }
 
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
+            document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            document.getElementById('page-' + pageId).classList.add('active');
+            targetPage.classList.add('active');
 
             const scroller = document.getElementById('main-scroller');
-            scroller.scrollTo({ top: 0, behavior: 'smooth' });
+            if (scroller) scroller.scrollTo({ top: 0, behavior: 'smooth' });
+
             closeMenu();
         }
 
         function showDownloadModal() {
             const modal = document.getElementById('downloadModal');
+            if (!modal) return;
+
+            if (modalCloseTimer) {
+                clearTimeout(modalCloseTimer);
+                modalCloseTimer = null;
+            }
+
             modal.classList.remove('closing');
             modal.classList.add('active');
         }
 
         function closeDownloadModal() {
             const modal = document.getElementById('downloadModal');
+            if (!modal) return;
+            if (!modal.classList.contains('active') || modal.classList.contains('closing')) return;
+
             modal.classList.add('closing');
-            
-            setTimeout(() => {
+
+            modalCloseTimer = setTimeout(() => {
                 modal.classList.remove('active');
                 modal.classList.remove('closing');
+                modalCloseTimer = null;
             }, 500);
         }
 
@@ -662,7 +687,25 @@
             closeDownloadModal();
         }
 
-        window.addEventListener('resize', function() {
+        const downloadModal = document.getElementById('downloadModal');
+        if (downloadModal) {
+            downloadModal.addEventListener('click', function (e) {
+                if (e.target === downloadModal) {
+                    closeDownloadModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('downloadModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeDownloadModal();
+                }
+            }
+        });
+
+        window.addEventListener('resize', function () {
             if (window.innerWidth > 1024) {
                 closeMenu();
             }
