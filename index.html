@@ -28,19 +28,19 @@
 
         .navbar {
             background-color: #ffffff;
-            height: 80px;
+            height: clamp(76px, 6.5vw, 92px); 
             flex-shrink: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
+            padding: 0 clamp(20px, 2vw, 36px);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); 
             z-index: 100;
             position: relative;
         }
 
         .navbar-logo {
-            height: 60px;
+            height: clamp(54px, 6.2vw, 68px); 
             display: flex;
             align-items: center;
         }
@@ -51,7 +51,7 @@
         }
 
         .logo-desktop {
-            margin-left: -20px;
+            margin-left: -10px;
         }
 
         .logo-mobile {
@@ -60,15 +60,16 @@
 
         .navbar-links {
             display: flex;
-            gap: 40px; 
+            gap: clamp(24px, 2.5vw, 38px); 
         }
 
         .navbar-links a {
             text-decoration: none;
             color: #222222;
-            font-size: 1.4rem;
+            font-size: clamp(1.4rem, 1.8vw, 1.6rem);
             font-weight: bold;
-            padding: 12px 28px;
+            /* 垂直高度降2px，水平宽度严格不变 */
+            padding: clamp(10px, 1.2vw, 14px) clamp(24px, 2.4vw, 34px); 
             border-radius: 10px;
             transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
@@ -79,7 +80,7 @@
             content: '';
             position: absolute;
             bottom: 4px;
-            left: 28px;
+            left: clamp(24px, 2.4vw, 34px);
             width: 0;
             height: 2px;
             background-color: currentColor;
@@ -87,7 +88,7 @@
         }
 
         .navbar-links a:hover::after {
-            width: calc(100% - 56px);
+            width: calc(100% - (clamp(24px, 2.4vw, 34px) * 2)); 
         }
 
         .nav-home:hover { color: #0055cc; background-color: rgba(0, 85, 204, 0.08); }
@@ -101,7 +102,7 @@
         .nav-sponsor.active { color: #dc3545; }
 
         .navbar-links a.active::after {
-            width: calc(100% - 56px);
+            width: calc(100% - (clamp(24px, 2.4vw, 34px) * 2));
         }
 
         .hamburger {
@@ -206,27 +207,27 @@
         .hero-banner img {
             width: 100%;
             display: block;
-            min-height: 450px;
+            min-height: clamp(350px, 38vw, 450px);
             object-fit: cover;
             background-color: #ffffff; 
         }
 
         .floating-cards {
             position: absolute;
-            right: 40px;          
-            top: 40px;            
+            right: clamp(30px, 3.5vw, 40px); 
+            top: clamp(30px, 3.5vw, 40px); 
             display: flex;
             flex-direction: column;
-            gap: 30px;            
-            width: 400px;         
+            gap: clamp(20px, 2.5vw, 30px); 
+            width: clamp(340px, 32vw, 400px); 
             z-index: 10;
         }
 
         .card {
             background-color: #ffffff;
             border-radius: 12px;
-            padding: 40px 30px;    
-            font-size: 1rem;       
+            padding: clamp(30px, 3.5vw, 40px) clamp(25px, 2.8vw, 30px);
+            font-size: 1rem; 
             font-weight: normal;   
             color: #333333;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); 
@@ -234,7 +235,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between; 
-            min-height: 200px;     
+            min-height: clamp(180px, 17vw, 200px); 
         }
 
         .card:hover {
@@ -260,7 +261,7 @@
             background-color: #0055cc;
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: clamp(10px, 1.2vw, 12px) clamp(18px, 1.8vw, 22px);
             border-radius: 6px;
             text-align: center;
             transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -423,15 +424,14 @@
             background-color: #0044aa;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .navbar {
                 padding: 0 20px;
-                height: 64px;
-                position: relative;
+                height: 70px;
             }
 
             .navbar-logo {
-                height: 40px;
+                height: 44px;
             }
 
             .logo-desktop {
@@ -451,7 +451,7 @@
                 display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: 64px;
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background-color: #ffffff;
@@ -469,7 +469,7 @@
             }
 
             .navbar-links a {
-                font-size: 1.1rem;
+                font-size: 1.15rem;
                 padding: 14px 16px;
                 border-radius: 8px;
                 width: 100%;
@@ -481,12 +481,13 @@
             }
 
             .scroll-container {
-                height: calc(100vh - 64px);
+                height: calc(100vh - 70px);
             }
 
             .hero-banner img {
-                min-height: 200px;
+                min-height: 250px;
             }
+            
             .floating-cards {
                 position: static;
                 width: 100%;
@@ -662,7 +663,7 @@
         }
 
         window.addEventListener('resize', function() {
-            if (window.innerWidth > 900) {
+            if (window.innerWidth > 1024) {
                 closeMenu();
             }
         });
