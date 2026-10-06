@@ -276,19 +276,205 @@
         .other-page-content {
             max-width: 900px;
             margin: 60px auto;
-            padding: 0 20px;
+            padding: 0 40px;
+            text-align: left;
         }
 
         .other-page-content h2 {
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #111;
+            text-align: left;
         }
 
         .other-page-content p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             color: #555;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .download-desc {
+            margin-bottom: 45px;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+            align-items: start;
+        }
+
+        .download-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .download-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .download-card .version {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #111111;
+            margin-bottom: 4px;
+        }
+
+        .download-card .date {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-bottom: 16px;
+        }
+
+        .download-card .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .download-card .links a {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: opacity 0.2s ease;
+            cursor: pointer;
+        }
+
+        .download-card .links a:hover {
+            opacity: 0.85;
+        }
+
+        .link-123 { background-color: #3b82f6; }
+        .link-lanzou { background-color: #f59e0b; }
+        .link-baidu { background-color: #ef4444; }
+        .link-bili { background-color: #f472b6; }
+        .qq-number { color: #0055cc; font-weight: bold; }
+
+        /* --- 公告轮播卡片：修复版本 --- */
+        .notice-card {
+            position: relative;
+            overflow: hidden;
+            height: clamp(180px, 17vw, 200px); /* 固定卡片高度 */
+        }
+
+        .notice-content {
+            flex: 1;
+            display: grid;
+            position: relative;
+            overflow-y: auto;
+            padding-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* 细滚动条 */
+        .notice-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .notice-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .notice-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        .notice-content::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* 所有页面重叠在同一格子内 */
+        .notice-page {
+            grid-area: 1 / 1;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+
+        .notice-page.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .notice-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            align-items: center;
+            padding-top: 8px;
+        }
+
+        .notice-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .notice-dot:hover {
+            transform: scale(1.3);
+        }
+
+        .notice-dot.active {
+            background-color: #888888;
+        }
+
+        /* --- 赞助页专属样式 --- */
+        .sponsor-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .sponsor-qr {
+            width: 260px;
+            height: 260px;
+            object-fit: contain;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sponsor-qr:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .sponsor-note {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #555555;
+            font-weight: bold;
+        }
+
+        .sponsor-disclaimer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #888888;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
         }
 
         .footer {
@@ -385,6 +571,7 @@
             margin-bottom: 25px;
             font-size: 1rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .modal-buttons {
@@ -510,6 +697,17 @@
 
             .other-page-content {
                 margin: 30px auto;
+                padding: 0 20px;
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .sponsor-qr {
+                width: 220px;
+                height: 220px;
             }
 
             .footer-divider {
@@ -553,13 +751,23 @@
                                 <h3>KAMC 键鼠控制器</h3>
                                 <p>一款美观、易上手、功能强大的键鼠效率工具。目前已获得超过 3 万次下载，2.0.0 版本正在用 C++ 与 Qt 重构中。</p>
                             </div>
-                            <a onclick="showDownloadModal()" class="card-btn">立即下载 (v1.3.1)</a>
+                            <a onclick="showDownloadModal('蓝奏云', 'https://wwawn.lanzouw.com/it2qW2bbdn3e', 'v1.3.1')" class="card-btn">立即下载 (v1.3.1)</a>
                         </div>
 
-                        <div class="card">
-                            <div>
-                                <h3>公告与通知</h3>
-                                <p>这里是公告或新闻区域。最终这里发布最新的开发进度、活动信息或赞助商广告。</p>
+                        <div class="card notice-card">
+                            <div class="notice-content">
+                                <div class="notice-page active" id="notice-page-0">
+                                    <h3>公告与通知</h3>
+                                    <p>这里是公告或新闻区域。之后这里会发布软件的开发进度、活动信息或赞助商广告。</p>
+                                </div>
+                                <div class="notice-page" id="notice-page-1">
+                                    <h3>加入官方交流群owo</h3>
+                                    <p>非常欢迎大家加入 KAMC 交流群：<strong class="qq-number">901169851</strong>，一起交流使用心得、反馈问题，并且能获取最新的开发动态和内测资格！</p>
+                                </div>
+                            </div>
+                            <div class="notice-dots">
+                                <span class="notice-dot active" onclick="manualSwitchNotice(0)"></span>
+                                <span class="notice-dot" onclick="manualSwitchNotice(1)"></span>
                             </div>
                         </div>
                     </div>
@@ -569,21 +777,97 @@
             <div id="page-downloads" class="page">
                 <div class="other-page-content">
                     <h2>下载中心</h2>
-                    <p>这里是下载页面的内容，后续将陆续在这里添加历史版本或其他小工具</p>
+                    <p class="download-desc">这里收录了 KAMC 键鼠控制器的历代版本存档。您可以下载最新稳定版，也可以翻阅早期版本回顾开发历程。部分旧版本可能存在已知 Bug，建议优先使用最新稳定版。</p>
+
+                    <div class="download-grid">
+
+                        <div class="download-card">
+                            <div class="version">v1.3.1 Beta</div>
+                            <div class="date">2024.10.1</div>
+                            <div class="links">
+                                <a class="link-123" onclick="showDownloadModal('123网盘', 'https://www.123pan.com/s/SG3ZVv-NzTyd', 'v1.3.1 Beta'); return false;" href="javascript:void(0);">123网盘</a>
+                                <a class="link-lanzou" onclick="showDownloadModal('蓝奏云', 'https://wwkb.lanzouw.com/it2qW2bbdn3e', 'v1.3.1 Beta'); return false;" href="javascript:void(0);">蓝奏云</a>
+                                <a class="link-baidu" onclick="showDownloadModal('百度云', 'https://pan.baidu.com/s/1VIANCFyyFeVUp9i3Isk0mQ?pwd=kamc', 'v1.3.1 Beta'); return false;" href="javascript:void(0);">百度云</a>
+                            </div>
+                        </div>
+
+                        <div class="download-card">
+                            <div class="version">v1.3.0</div>
+                            <div class="date">2023.8.31</div>
+                            <div class="links">
+                                <a class="link-123" onclick="showDownloadModal('123网盘', 'https://www.123pan.com/s/SG3ZVv-v1i6d.html', 'v1.3.0'); return false;" href="javascript:void(0);">123网盘</a>
+                                <a class="link-lanzou" onclick="showDownloadModal('蓝奏云', 'https://wwkb.lanzoue.com/ibDhW16znnva', 'v1.3.0'); return false;" href="javascript:void(0);">蓝奏云</a>
+                                <a class="link-baidu" onclick="showDownloadModal('百度云', 'https://pan.baidu.com/s/1-Yoi_Vg6CH_p7GDtK73tGQ?pwd=kamc', 'v1.3.0'); return false;" href="javascript:void(0);">百度云</a>
+                                <a class="link-bili" onclick="showDownloadModal('Bilibili', 'https://www.bilibili.com/video/BV15N411v7JM/', 'v1.3.0'); return false;" href="javascript:void(0);">B站视频</a>
+                            </div>
+                        </div>
+
+                        <div class="download-card">
+                            <div class="version">v1.2.1 补丁版</div>
+                            <div class="date">2023.8.12</div>
+                            <div class="links">
+                                <a class="link-123" onclick="showDownloadModal('123网盘', 'https://www.123pan.com/s/SG3ZVv-l7t6d.html', 'v1.2.1 补丁版'); return false;" href="javascript:void(0);">123网盘</a>
+                                <a class="link-lanzou" onclick="showDownloadModal('蓝奏云', 'https://wwkb.lanzoue.com/isa8D156u4pc', 'v1.2.1 补丁版'); return false;" href="javascript:void(0);">蓝奏云</a>
+                                <a class="link-baidu" onclick="showDownloadModal('百度云', 'https://pan.baidu.com/s/1QIsj1RSELPcswAaN25vILw?pwd=kamc', 'v1.2.1 补丁版'); return false;" href="javascript:void(0);">百度云</a>
+                            </div>
+                        </div>
+
+                        <div class="download-card">
+                            <div class="version">v1.2.0</div>
+                            <div class="date">2023.8.07</div>
+                            <div class="links">
+                                <a class="link-123" onclick="showDownloadModal('123网盘', 'https://www.123pan.com/s/SG3ZVv-Z0t6d.html', 'v1.2.0'); return false;" href="javascript:void(0);">123网盘</a>
+                                <a class="link-lanzou" onclick="showDownloadModal('蓝奏云', 'https://wwkb.lanzoue.com/iQ8Ed14s41aj', 'v1.2.0'); return false;" href="javascript:void(0);">蓝奏云</a>
+                                <a class="link-baidu" onclick="showDownloadModal('百度云', 'https://pan.baidu.com/s/1imChQQcYJEoZpuf-i90w_g?pwd=kamc', 'v1.2.0'); return false;" href="javascript:void(0);">百度云</a>
+                                <a class="link-bili" onclick="showDownloadModal('Bilibili', 'https://www.bilibili.com/video/BV1A44y1A7WD/', 'v1.2.0'); return false;" href="javascript:void(0);">B站视频</a>
+                            </div>
+                        </div>
+
+                        <div class="download-card">
+                            <div class="version">v1.1.0 Beta</div>
+                            <div class="date">2023.7.24</div>
+                            <div class="links">
+                                <a class="link-123" onclick="showDownloadModal('123网盘', 'https://www.123pan.com/s/SG3ZVv-pIt6d.html', 'v1.1.0 Beta'); return false;" href="javascript:void(0);">123网盘</a>
+                                <a class="link-lanzou" onclick="showDownloadModal('蓝奏云', 'https://wwkb.lanzoue.com/iDgW113shtwb', 'v1.1.0 Beta'); return false;" href="javascript:void(0);">蓝奏云</a>
+                                <a class="link-baidu" onclick="showDownloadModal('百度云', 'https://pan.baidu.com/s/1dT1-aAyqQ8xAbCJyA6M8jg?pwd=kamc', 'v1.1.0 Beta'); return false;" href="javascript:void(0);">百度云</a>
+                                <a class="link-bili" onclick="showDownloadModal('Bilibili', 'https://www.bilibili.com/video/BV1Qx4y197ru/', 'v1.1.0 Beta'); return false;" href="javascript:void(0);">B站视频</a>
+                            </div>
+                        </div>
+
+                        <div class="download-card">
+                            <div class="version">v1.0.0 Beta</div>
+                            <div class="date">2023.7.22</div>
+                            <div class="links">
+                                <a class="link-123" onclick="showDownloadModal('123网盘', 'https://www.123pan.com/s/SG3ZVv-Xat6d.html', 'v1.0.0 Beta'); return false;" href="javascript:void(0);">123网盘</a>
+                                <a class="link-lanzou" onclick="showDownloadModal('蓝奏云', 'https://wwkb.lanzoue.com/ioNgI13z5qsj', 'v1.0.0 Beta'); return false;" href="javascript:void(0);">蓝奏云</a>
+                                <a class="link-baidu" onclick="showDownloadModal('百度云', 'https://pan.baidu.com/s/1WZ6MLfIqUURqJ_et4C-RnQ?pwd=kamc', 'v1.0.0 Beta'); return false;" href="javascript:void(0);">百度云</a>
+                                <a class="link-bili" onclick="showDownloadModal('Bilibili', 'https://www.bilibili.com/video/BV1QM4y1s7Ya/', 'v1.0.0 Beta'); return false;" href="javascript:void(0);">B站视频</a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
             <div id="page-faq" class="page">
                 <div class="other-page-content">
                     <h2>常见问题</h2>
-                    <p>这里是常见问题页面的内容。</p>
+                    <p>这里是常见问题页面的内容。后续将整理用户常问的问题与解答，方便快速排查。</p>
                 </div>
             </div>
 
             <div id="page-sponsor" class="page">
                 <div class="other-page-content">
                     <h2>赞助支持</h2>
-                    <p>这里是赞助页面的内容。</p>
+                    <p>KAMC 是我作为个人开发者从零开发的桌面工具，从 2022 年到目前已经迭代了多个版本。软件本身所有功能全部免费！并且在 github 上开源（v1 的源码都包含在下载链接中了）</p>
+                    <p>如果你觉得它帮到了你，欢迎扫码赞赏！你的支持会用于服务器费用和开发资源，也会让我更有动力继续更新 &gt;w&lt; ！</p>
+                    
+                    <div class="sponsor-container">
+                        <img src="./wechat_reward.png" alt="微信赞赏码" class="sponsor-qr">
+                        <p class="sponsor-note">扫码请我喝杯奶茶 ~ nwn</p>
+                    </div>
+
+                    <p class="sponsor-disclaimer">⚠️ 赞助为自愿赠与，不构成购买服务或对价。感谢每一份支持！</p>
                 </div>
             </div>
 
@@ -599,17 +883,18 @@
 
     <div class="modal-overlay" id="downloadModal">
         <div class="modal-box">
-            <h3>即将跳转至蓝奏云</h3>
-            <p>您即将离开本站，前往蓝奏云分享页面下载 KAMC v1.3.1。是否继续？</p>
+            <h3 id="modal-title">即将跳转至外部链接</h3>
+            <p id="modal-desc">您即将离开本站，前往外部页面。是否继续？</p>
             <div class="modal-buttons">
                 <button class="btn-cancel" onclick="closeDownloadModal()">取消</button>
-                <button class="btn-confirm" onclick="confirmDownload()">前往下载</button>
+                <button class="btn-confirm" id="modal-confirm-btn" onclick="confirmDownload()">前往下载</button>
             </div>
         </div>
     </div>
 
     <script>
         let modalCloseTimer = null;
+        let currentDownloadUrl = '';
 
         function toggleMenu(btn) {
             const menu = document.getElementById('navMenu');
@@ -655,9 +940,26 @@
             closeMenu();
         }
 
-        function showDownloadModal() {
+        function showDownloadModal(platform, url, version) {
             const modal = document.getElementById('downloadModal');
             if (!modal) return;
+
+            let title, desc, btnText;
+            if (platform === 'Bilibili') {
+                title = '即将跳转至 Bilibili';
+                desc = '您即将离开本站，前往 Bilibili 观看 KAMC ' + version + ' 相关视频。是否继续？';
+                btnText = '前往观看';
+            } else {
+                title = '即将跳转至' + platform;
+                desc = '您即将离开本站，前往' + platform + '下载 KAMC ' + version + '。是否继续？';
+                btnText = '前往下载';
+            }
+
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-confirm-btn').innerText = btnText;
+
+            currentDownloadUrl = url;
 
             if (modalCloseTimer) {
                 clearTimeout(modalCloseTimer);
@@ -683,7 +985,9 @@
         }
 
         function confirmDownload() {
-            window.open('https://wwawn.lanzouw.com/it2qW2bbdn3e', '_blank');
+            if (currentDownloadUrl) {
+                window.open(currentDownloadUrl, '_blank');
+            }
             closeDownloadModal();
         }
 
@@ -709,6 +1013,46 @@
             if (window.innerWidth > 1024) {
                 closeMenu();
             }
+        });
+
+        // --- 公告轮播逻辑 ---
+        let currentNotice = 0;
+        let autoSwitchTimer = null;
+        let manualCooldownTimer = null;
+
+        function switchNotice(index) {
+            const pages = document.querySelectorAll('.notice-page');
+            const dots = document.querySelectorAll('.notice-dot');
+            if (pages.length === 0) return;
+
+            pages.forEach((page, i) => {
+                page.classList.toggle('active', i === index);
+                if (dots[i]) dots[i].classList.toggle('active', i === index);
+            });
+            currentNotice = index;
+        }
+
+        function startNoticeAutoSwitch() {
+            if (autoSwitchTimer) clearInterval(autoSwitchTimer);
+            autoSwitchTimer = setInterval(() => {
+                let nextIndex = (currentNotice + 1) % 2;
+                switchNotice(nextIndex);
+            }, 10000);
+        }
+
+        function manualSwitchNotice(index) {
+            switchNotice(index);
+            
+            if (autoSwitchTimer) clearInterval(autoSwitchTimer);
+            if (manualCooldownTimer) clearTimeout(manualCooldownTimer);
+            
+            manualCooldownTimer = setTimeout(() => {
+                startNoticeAutoSwitch();
+            }, 60000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startNoticeAutoSwitch();
         });
     </script>
 
