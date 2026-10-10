@@ -1,0 +1,159 @@
+{
+    "meta": {
+      "lang": "zh-CN",
+      "title": "KAMC 键鼠控制器",
+      "favicon": "./resources/image/favicon.png",
+      "description": "KAMC 键鼠控制器 —— 免费开源的键鼠效率工具，已获 3 万+ 下载，2.0.0 版本正在用 C++ 与 Qt 重构中",
+      "themeColor": "#0055cc",
+      "og": {
+        "type": "website",
+        "title": "KAMC 键鼠控制器",
+        "description": "免费开源的键鼠效率工具，已获 3 万+ 下载",
+        "image": "https://kamc.top/resources/image/promotional_image.png",
+        "url": "https://kamc.top/"
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "title": "KAMC 键鼠控制器",
+        "description": "免费开源的键鼠效率工具",
+        "image": "https://kamc.top/resources/image/promotional_image.png"
+      }
+    },
+    "brand": {
+      "logoDesktop": { "src": "./resources/image/official_website_logo.png", "alt": "KAMC 官网" },
+      "logoMobile": { "src": "./resources/image/logo512.png", "alt": "KAMC 官网" }
+    },
+    "hamburger": {
+      "ariaLabel": "菜单"
+    },
+    "nav": [
+      { "id": "home", "label": "首页", "className": "nav-home" },
+      { "id": "downloads", "label": "下载", "className": "nav-download" },
+      { "id": "faq", "label": "常见问题", "className": "nav-faq" },
+      { "id": "sponsor", "label": "赞助", "className": "nav-sponsor" }
+    ],
+    "home": {
+      "srTitle": "首页",
+      "heroImage": { "src": "./resources/image/promotional_image.png", "alt": "KAMC 宣传图" },
+      "mainCard": {
+        "title": "KAMC 键鼠控制器",
+        "description": "一款美观、易上手、功能强大的键鼠效率工具。目前已获得超过 3 万次下载，2.0.0 版本正在用 C++ 与 Qt 重构中",
+        "cta": {
+          "label": "立即下载（v1.3.1 Beta）",
+          "type": "lanzou",
+          "platform": "蓝奏云",
+          "url": "https://wwawn.lanzouw.com/it2qW2bbdn3e",
+          "version": "v1.3.1 Beta"
+        }
+      },
+      "notices": [
+        {
+          "title": "公告与通知",
+          "body": "这里是公告或新闻区域。之后这里会发布软件的开发进度、活动信息或赞助商广告",
+          "dotLabel": "第 1 条公告"
+        },
+        {
+          "title": "加入官方交流群owo",
+          "body": "非常欢迎大家加入 KAMC 交流群：<strong class=\"qq-number\">901169851</strong>，一起交流使用心得、反馈问题，并且能获取最新的开发动态和内测资格！",
+          "dotLabel": "第 2 条公告"
+        }
+      ]
+    },
+    "downloads": {
+      "title": "下载中心",
+      "description": "这里收录了 KAMC 键鼠控制器的历代版本存档，您可以下载最新稳定版，也可以翻阅早期版本回顾开发历程。部分旧版本可能存在已知 Bug，建议优先使用最新稳定版。",
+      "items": [
+        {
+          "version": "v1.3.1 Beta",
+          "date": "2024.10.1",
+          "links": [
+            { "type": "123", "label": "123网盘", "platform": "123网盘", "url": "https://www.123pan.com/s/SG3ZVv-NzTyd" },
+            { "type": "lanzou", "label": "蓝奏云", "platform": "蓝奏云", "url": "https://wwawn.lanzouw.com/it2qW2bbdn3e" },
+            { "type": "baidu", "label": "百度云", "platform": "百度云", "url": "https://pan.baidu.com/s/1VIANCFyyFeVUp9i3Isk0mQ?pwd=kamc" }
+          ]
+        },
+        {
+          "version": "v1.3.0",
+          "date": "2023.8.31",
+          "links": [
+            { "type": "123", "label": "123网盘", "platform": "123网盘", "url": "https://www.123pan.com/s/SG3ZVv-v1i6d.html" },
+            { "type": "lanzou", "label": "蓝奏云", "platform": "蓝奏云", "url": "https://wwkb.lanzoue.com/ibDhW16znnva" },
+            { "type": "baidu", "label": "百度云", "platform": "百度云", "url": "https://pan.baidu.com/s/1-Yoi_Vg6CH_p7GDtK73tGQ?pwd=kamc" },
+            { "type": "bili", "label": "B站视频", "platform": "Bilibili", "url": "https://www.bilibili.com/video/BV15N411v7JM/" }
+          ]
+        },
+        {
+          "version": "v1.2.1 补丁版",
+          "date": "2023.8.12",
+          "links": [
+            { "type": "123", "label": "123网盘", "platform": "123网盘", "url": "https://www.123pan.com/s/SG3ZVv-l7t6d.html" },
+            { "type": "lanzou", "label": "蓝奏云", "platform": "蓝奏云", "url": "https://wwkb.lanzoue.com/isa8D156u4pc" },
+            { "type": "baidu", "label": "百度云", "platform": "百度云", "url": "https://pan.baidu.com/s/1QIsj1RSELPcswAaN25vILw?pwd=kamc" }
+          ]
+        },
+        {
+          "version": "v1.2.0",
+          "date": "2023.8.07",
+          "links": [
+            { "type": "123", "label": "123网盘", "platform": "123网盘", "url": "https://www.123pan.com/s/SG3ZVv-Z0t6d.html" },
+            { "type": "lanzou", "label": "蓝奏云", "platform": "蓝奏云", "url": "https://wwkb.lanzoue.com/iQ8Ed14s41aj" },
+            { "type": "baidu", "label": "百度云", "platform": "百度云", "url": "https://pan.baidu.com/s/1imChQQcYJEoZpuf-i90w_g?pwd=kamc" },
+            { "type": "bili", "label": "B站视频", "platform": "Bilibili", "url": "https://www.bilibili.com/video/BV1A44y1A7WD/" }
+          ]
+        },
+        {
+          "version": "v1.1.0 Beta",
+          "date": "2023.7.24",
+          "links": [
+            { "type": "123", "label": "123网盘", "platform": "123网盘", "url": "https://www.123pan.com/s/SG3ZVv-pIt6d.html" },
+            { "type": "lanzou", "label": "蓝奏云", "platform": "蓝奏云", "url": "https://wwkb.lanzoue.com/iDgW113shtwb" },
+            { "type": "baidu", "label": "百度云", "platform": "百度云", "url": "https://pan.baidu.com/s/1dT1-aAyqQ8xAbCJyA6M8jg?pwd=kamc" },
+            { "type": "bili", "label": "B站视频", "platform": "Bilibili", "url": "https://www.bilibili.com/video/BV1Qx4y197ru/" }
+          ]
+        },
+        {
+          "version": "v1.0.0 Beta",
+          "date": "2023.7.22",
+          "links": [
+            { "type": "123", "label": "123网盘", "platform": "123网盘", "url": "https://www.123pan.com/s/SG3ZVv-Xat6d.html" },
+            { "type": "lanzou", "label": "蓝奏云", "platform": "蓝奏云", "url": "https://wwkb.lanzoue.com/ioNgI13z5qsj" },
+            { "type": "baidu", "label": "百度云", "platform": "百度云", "url": "https://pan.baidu.com/s/1WZ6MLfIqUURqJ_et4C-RnQ?pwd=kamc" },
+            { "type": "bili", "label": "B站视频", "platform": "Bilibili", "url": "https://www.bilibili.com/video/BV1QM4y1s7Ya/" }
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "这里是常见问题页面的内容。后续将整理用户常问的问题与解答，方便快速排查。"
+    },
+    "sponsor": {
+      "title": "赞助支持",
+      "paragraphs": [
+        "KAMC 是我作为个人开发者从零开发的桌面工具，从 2022 年到目前已经迭代了多个版本。软件本身所有功能全部免费！并且在 github 上开源（v1 的源码都包含在下载链接中了）",
+        "如果你觉得它帮到了你，欢迎扫码赞赏！你的支持会用于服务器费用和开发资源，也会让我更有动力继续更新 &gt;w&lt; ！"
+      ],
+      "qr": { "src": "./resources/image/wechat_reward.png", "alt": "微信赞赏码" },
+      "note": "扫码请我喝杯奶茶 ~ nwn",
+      "disclaimer": "⚠️ 赞助为自愿赠与，不构成购买服务或对价。感谢每一份支持！"
+    },
+    "footer": {
+      "copyright": "© 2026 昌龙XL | kamc.top",
+      "bilibiliLabel": "@昌龙XL",
+      "bilibiliUrl": "https://space.bilibili.com/3461574912117204",
+      "tagline": "Keyboard and mouse controller 2022-2026"
+    },
+    "modal": {
+      "cancelText": "取消",
+      "bilibili": {
+        "titleTemplate": "即将跳转至 Bilibili",
+        "descTemplate": "您即将离开本站，前往 Bilibili 观看 KAMC {version} 相关视频，是否继续？",
+        "confirmText": "前往观看"
+      },
+      "download": {
+        "titleTemplate": "即将跳转至{platform}",
+        "descTemplate": "您即将离开本站，前往{platform}下载 KAMC {version}，是否继续？",
+        "confirmText": "前往下载"
+      }
+    }
+  }
