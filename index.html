@@ -93,6 +93,7 @@
             appearance: none;
         }
 
+        /* 下划线恢复原来的 width 过渡（scaleX 会让 2px 线条出现亚像素变细） */
         .navbar-links a::after,
         .navbar-links button::after {
             content: '';
@@ -313,6 +314,8 @@
             color: #111;
             text-align: left;
             outline: none;
+            /* 被 focus 的标题不显示文本光标，避免切页后导航栏附近闪出 I 型光标 */
+            cursor: default;
         }
 
         .other-page-content p {
@@ -542,6 +545,7 @@
             text-decoration: underline;
         }
 
+        /* 毛玻璃遮罩保持原样。唯一改动的 .closing 关闭态见下方说明 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -549,6 +553,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.4);
+            -webkit-backdrop-filter: blur(4px);
             backdrop-filter: blur(4px);
             z-index: 999;
             display: flex;
@@ -565,10 +570,18 @@
             transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s;
         }
 
+        /* 关闭态：只把 visibility 从 hidden 改成 visible —— 原写法在 .closing 阶段就立刻
+           把遮罩设为 hidden，透明度动画还没播就被切断，毛玻璃层被重新采样，于是闪一帧。
+           保持可见让 0.5s 淡出完整播完，动画结束后由 JS 设置 hidden 属性。 */
         .modal-overlay.closing {
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.5s;
+            visibility: visible;
+        }
+
+        /* 弹窗遮罩自身是 display:flex，会覆盖 hidden 属性隐含的 display:none，
+           必须显式声明，否则关闭后遮罩虽不可见但仍会拦截整个页面的点击 */
+        .modal-overlay[hidden] {
+            display: none;
         }
 
         .modal-box {
@@ -581,6 +594,7 @@
             text-align: center;
             opacity: 0.6;
             transform: scale(0.95) translateY(6px);
+            cursor: default;
             transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
@@ -786,7 +800,7 @@
         <footer class="footer" id="pageFooter"></footer>
     </div>
 
-    <div class="modal-overlay" id="downloadModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-overlay" id="downloadModal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" hidden>
         <div class="modal-box">
             <h3 id="modal-title"></h3>
             <p id="modal-desc"></p>
@@ -808,6 +822,9 @@
         let currentNotice = 0;
         let autoSwitchTimer = null;
         let manualCooldownTimer = null;
+        let lastInteractionWasPointer = false;
+        let modalFocusTimer = null;
+        const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
         /* ============================================================
          * Meta / 品牌 / 导航 / 内容渲染
@@ -1019,16 +1036,31 @@
                 history.replaceState(null, '', '#' + pageId);
             }
 
-            const h2 = targetPage.querySelector('h2');
-            if (h2) {
-                h2.setAttribute('tabindex', '-1');
+            focusPageHeading(targetPage);
+        }
+
+        /* 只有键盘操作或手动改 hash 的跳转才把焦点移到标题。
+           鼠标点击时强行 focus 标题会让浏览器移动焦点环并重算 :hover，
+           表现为导航栏按钮附近光标样式闪烁。 */
+        function focusPageHeading(page) {
+            if (lastInteractionWasPointer) return;
+            const h2 = page.querySelector('h2');
+            if (!h2) return;
+            h2.setAttribute('tabindex', '-1');
+            try {
                 h2.focus({ preventScroll: true });
+            } catch (err) {
+                h2.focus();
             }
         }
 
         /* ============================================================
          * 下载弹窗
          * ============================================================ */
+
+        function isModalOpen(modal) {
+            return modal.classList.contains('active') && !modal.classList.contains('closing');
+        }
 
         function showDownloadModal(link, version) {
             const modal = document.getElementById('downloadModal');
@@ -1046,40 +1078,77 @@
             document.getElementById('modal-desc').textContent = desc;
             document.getElementById('modal-confirm-btn').textContent = tpl.confirmText;
 
+            /* 只在弹窗确实处于关闭状态时记录来源焦点，
+               否则连续点击两个下载按钮会把返回目标覆盖成刚失焦的元素 */
+            if (!modal.classList.contains('active')) {
+                lastFocusedElement = document.activeElement;
+            }
+
             currentDownloadUrl = link.url;
-            lastFocusedElement = document.activeElement;
 
             if (modalCloseTimer) {
                 clearTimeout(modalCloseTimer);
                 modalCloseTimer = null;
             }
+            if (modalFocusTimer) {
+                clearTimeout(modalFocusTimer);
+                modalFocusTimer = null;
+            }
 
-            modal.classList.remove('closing');
+            /* 先回到无过渡的初始状态并强制一次样式刷新，再加 active，
+               保证每次都从初始透明度真实过渡进来，而不是瞬间出现后重绘 */
+            modal.classList.remove('closing', 'active');
+            modal.hidden = false;
+            void modal.offsetWidth;
+            modal.setAttribute('aria-hidden', 'false');
             modal.classList.add('active');
 
-            setTimeout(function () {
+            /* 等过渡起步后再把焦点放进弹窗（也避免鼠标点击下载按钮后，
+               焦点环在遮罩淡出的那一刻跟着重绘） */
+            modalFocusTimer = setTimeout(function () {
+                modalFocusTimer = null;
+                if (!isModalOpen(modal)) return;
                 const confirmBtn = document.getElementById('modal-confirm-btn');
-                if (confirmBtn) confirmBtn.focus();
-            }, 50);
+                if (confirmBtn) confirmBtn.focus({ preventScroll: true });
+            }, 60);
         }
 
         function closeDownloadModal() {
             const modal = document.getElementById('downloadModal');
             if (!modal) return;
-            if (!modal.classList.contains('active') || modal.classList.contains('closing')) return;
+            if (!isModalOpen(modal)) return;
+
+            if (modalFocusTimer) {
+                clearTimeout(modalFocusTimer);
+                modalFocusTimer = null;
+            }
+
+            modal.setAttribute('aria-hidden', 'true');
+
+            /* 先移走焦点再开始淡出：避免遮罩消失的同一帧里焦点环跟着重绘 */
+            if (modal.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
 
             modal.classList.add('closing');
 
             modalCloseTimer = setTimeout(function () {
-                modal.classList.remove('active');
-                modal.classList.remove('closing');
                 modalCloseTimer = null;
+                modal.classList.remove('active', 'closing');
+                modal.hidden = true;
 
-                if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-                    lastFocusedElement.focus();
-                    lastFocusedElement = null;
+                /* 焦点在动画彻底结束后才还原，防止导航栏上闪出焦点环 */
+                const target = lastFocusedElement;
+                lastFocusedElement = null;
+                if (target && typeof target.focus === 'function' && document.contains(target)) {
+                    try {
+                        target.focus({ preventScroll: true });
+                    } catch (err) {
+                        target.focus();
+                    }
                 }
-            }, 500);
+            /* 520ms > CSS 的 0.5s 过渡，确保淡出播完后再隐藏并恢复焦点 */
+            }, 520);
         }
 
         function confirmDownload() {
@@ -1095,20 +1164,24 @@
 
         function toggleMenu(btn) {
             const menu = document.getElementById('navMenu');
-            const isOpen = menu.classList.toggle('open');
-            btn.classList.toggle('open', isOpen);
-            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (!menu) return;
+
+            const willOpen = !menu.classList.contains('open');
+            menu.classList.toggle('open', willOpen);
+
+            btn.classList.toggle('open', willOpen);
+            btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
         }
 
         function closeMenu() {
             const menu = document.getElementById('navMenu');
             const btn = document.querySelector('.hamburger');
             if (!menu || !btn) return;
-            if (menu.classList.contains('open')) {
-                menu.classList.remove('open');
-                btn.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
-            }
+            if (!menu.classList.contains('open')) return;
+
+            menu.classList.remove('open');
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
         }
 
         /* ============================================================
@@ -1201,7 +1274,7 @@
                 if (e.key !== 'Tab') return;
                 if (!m.classList.contains('active') || m.classList.contains('closing')) return;
 
-                const focusable = m.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const focusable = m.querySelectorAll(FOCUSABLE_SELECTOR);
                 if (focusable.length === 0) return;
                 const first = focusable[0];
                 const last = focusable[focusable.length - 1];
@@ -1220,9 +1293,25 @@
             });
 
             window.addEventListener('hashchange', function () {
+                lastInteractionWasPointer = false;
                 const pageId = location.hash.substring(1) || 'home';
                 switchPage(pageId);
             });
+
+            /* 指针与键盘交互分开记录：鼠标点击时不要把焦点搬到标题上 */
+            document.addEventListener('pointerdown', function () {
+                lastInteractionWasPointer = true;
+            }, true);
+            document.addEventListener('keydown', function () {
+                lastInteractionWasPointer = false;
+            }, true);
+
+            const scroller = document.getElementById('main-scroller');
+            if (scroller) {
+                scroller.addEventListener('scroll', function () {
+                    if (window.innerWidth <= 1024) closeMenu();
+                }, { passive: true });
+            }
         }
 
         /* ============================================================
