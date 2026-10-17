@@ -55,6 +55,14 @@
             height: clamp(54px, 6.2vw, 68px);
             display: flex;
             align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .navbar-logo:focus-visible {
+            outline: 2px solid #0055cc;
+            outline-offset: 4px;
+            border-radius: 6px;
         }
 
         .navbar-logo img {
@@ -93,7 +101,6 @@
             appearance: none;
         }
 
-        /* 下划线恢复原来的 width 过渡（scaleX 会让 2px 线条出现亚像素变细） */
         .navbar-links a::after,
         .navbar-links button::after {
             content: '';
@@ -314,7 +321,7 @@
             color: #111;
             text-align: left;
             outline: none;
-            /* 被 focus 的标题不显示文本光标，避免切页后导航栏附近闪出 I 型光标 */
+
             cursor: default;
         }
 
@@ -331,11 +338,18 @@
         }
 
         .download-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            align-items: flex-start;
             gap: 20px;
             margin-top: 10px;
-            align-items: start;
+        }
+
+        .download-col {
+            flex: 1 1 0;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .download-card {
@@ -399,6 +413,308 @@
         .link-baidu { background-color: #ef4444; }
         .link-bili { background-color: #f472b6; }
         .qq-number { color: #0055cc; font-weight: bold; }
+
+        .faq-search-wrap {
+            position: relative;
+            margin-bottom: 26px;
+        }
+
+        .faq-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        .faq-search {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 16px 13px 44px;
+            font-size: 1rem;
+            font-family: inherit;
+            color: #333333;
+            background-color: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .faq-search::placeholder {
+            color: #aaaaaa;
+        }
+
+        .faq-search:focus {
+            border-color: #0055cc;
+            box-shadow: 0 4px 18px rgba(0, 85, 204, 0.14);
+        }
+
+        .faq-grid {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .faq-col {
+            flex: 1 1 0;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .faq-card {
+            background-color: #ffffff;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            padding: 22px 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .faq-card:hover,
+        .faq-card:focus-visible {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 85, 204, 0.35);
+            outline: none;
+        }
+
+        .faq-card h3 {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: #111111;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .faq-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .faq-badge {
+            font-size: 0.78rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background-color: rgba(0, 85, 204, 0.08);
+            color: #0055cc;
+            white-space: nowrap;
+        }
+
+        .faq-badge.is-date {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #666666;
+        }
+
+        .faq-summary {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: #555555;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .faq-empty {
+            padding: 48px 0;
+            text-align: center;
+            color: #888888;
+            font-size: 0.95rem;
+        }
+
+        .faq-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+
+        .faq-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease, visibility 0s linear 0s;
+        }
+
+        .faq-modal {
+            width: 820px;
+            max-width: calc(100vw - 48px);
+            height: 620px;
+            max-height: calc(100vh - 80px);
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.98) translateY(8px);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .faq-modal-overlay.active .faq-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .faq-modal-header {
+            position: relative;
+            padding: 22px 26px 14px 26px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .faq-modal-header h3 {
+            font-size: 1.35rem;
+            line-height: 1.5;
+            color: #111111;
+            padding-right: 44px;
+            text-align: left;
+        }
+
+        .faq-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background-color: transparent;
+            color: #666666;
+            font-size: 1.1rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .faq-modal-close:hover {
+            background-color: rgba(0, 0, 0, 0.06);
+            color: #111111;
+        }
+
+        .faq-modal .faq-meta {
+            padding: 14px 26px 0 26px;
+            margin-bottom: 6px;
+        }
+
+        .faq-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 26px 28px 26px;
+            text-align: left;
+        }
+
+        .faq-modal-body h4 {
+            font-size: 1.02rem;
+            color: #111111;
+            margin: 18px 0 8px 0;
+        }
+
+        .faq-modal-body h4:first-child { margin-top: 0; }
+
+        .faq-modal-body p {
+            font-size: 0.95rem;
+            line-height: 1.85;
+            color: #555555;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .faq-modal-body ul,
+        .faq-modal-body ol {
+            margin: 0 0 14px 0;
+            padding-left: 22px;
+        }
+
+        .faq-modal-body li {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #555555;
+            margin-bottom: 4px;
+        }
+
+        .faq-modal-body img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 12px 0;
+            display: block;
+        }
+
+        .faq-modal-body code {
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            background-color: #f3f3f3;
+            border-radius: 4px;
+            padding: 2px 6px;
+        }
+
+        .faq-modal-body strong { color: #222222; }
+
+        .faq-modal-body a {
+            color: #0055cc;
+            text-decoration: none;
+        }
+
+        .faq-modal-body a:hover { text-decoration: underline; }
+
+        .faq-modal-body blockquote {
+            margin: 14px 0;
+            padding: 10px 16px;
+            border-left: 3px solid #f59e0b;
+            background-color: #fffaf0;
+            border-radius: 0 8px 8px 0;
+            color: #6b6b6b;
+            font-size: 0.92rem;
+            line-height: 1.8;
+        }
+
+        .faq-modal-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 16px 0;
+            font-size: 0.92rem;
+        }
+
+        .faq-modal-body th,
+        .faq-modal-body td {
+            border: 1px solid #eeeeee;
+            padding: 8px 12px;
+            text-align: left;
+            color: #555555;
+        }
+
+        .faq-modal-body th {
+            background-color: #fafafa;
+            color: #333333;
+        }
+
+        .faq-modal-body::-webkit-scrollbar { width: 8px; }
+        .faq-modal-body::-webkit-scrollbar-track { background: transparent; }
+        .faq-modal-body::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 8px;
+        }
 
         .notice-card {
             position: relative;
@@ -545,7 +861,6 @@
             text-decoration: underline;
         }
 
-        /* 毛玻璃遮罩保持原样。唯一改动的 .closing 关闭态见下方说明 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -570,16 +885,11 @@
             transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s;
         }
 
-        /* 关闭态：只把 visibility 从 hidden 改成 visible —— 原写法在 .closing 阶段就立刻
-           把遮罩设为 hidden，透明度动画还没播就被切断，毛玻璃层被重新采样，于是闪一帧。
-           保持可见让 0.5s 淡出完整播完，动画结束后由 JS 设置 hidden 属性。 */
         .modal-overlay.closing {
             opacity: 0;
             visibility: visible;
         }
 
-        /* 弹窗遮罩自身是 display:flex，会覆盖 hidden 属性隐含的 display:none，
-           必须显式声明，否则关闭后遮罩虽不可见但仍会拦截整个页面的点击 */
         .modal-overlay[hidden] {
             display: none;
         }
@@ -763,7 +1073,8 @@
             }
 
             .download-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: stretch;
                 gap: 15px;
             }
 
@@ -776,15 +1087,45 @@
                 margin-top: 60px;
             }
         }
-    </style>
+        @media (max-width: 1024px) {
+            .faq-grid {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .faq-modal {
+                width: calc(100vw - 32px);
+                height: calc(100vh - 64px);
+                border-radius: 12px;
+            }
+
+            .faq-modal-header {
+                padding: 18px 18px 12px 18px;
+            }
+
+            .faq-modal-header h3 {
+                font-size: 1.15rem;
+            }
+
+            .faq-modal .faq-meta {
+                padding: 12px 18px 0 18px;
+            }
+
+            .faq-modal-body {
+                padding: 14px 18px 22px 18px;
+            }
+        }
+
+</style>
 </head>
 <body>
 
     <header class="navbar">
-        <div class="navbar-logo">
+        <a class="navbar-logo" href="https://kamc.top" aria-label="返回 KAMC 首页">
             <img class="logo-desktop" alt="">
             <img class="logo-mobile" alt="">
-        </div>
+        </a>
 
         <button class="hamburger" type="button" onclick="toggleMenu(this)" aria-label="菜单" aria-expanded="false">
             <span></span>
@@ -811,10 +1152,19 @@
         </div>
     </div>
 
+    <div class="faq-modal-overlay" id="faqModal" role="dialog" aria-modal="true" aria-labelledby="faq-modal-title" aria-hidden="true" hidden>
+        <div class="faq-modal">
+            <div class="faq-modal-header">
+                <h3 id="faq-modal-title"></h3>
+                <button class="faq-modal-close" type="button" id="faq-modal-close" aria-label="关闭">✕</button>
+            </div>
+            <div class="faq-meta" id="faq-modal-meta"></div>
+            <div class="faq-modal-body" id="faq-modal-body"></div>
+        </div>
+    </div>
+
     <script>
-        /* ============================================================
-         * 全局状态
-         * ============================================================ */
+
         let CONTENT = null;
         let modalCloseTimer = null;
         let currentDownloadUrl = '';
@@ -826,9 +1176,10 @@
         let modalFocusTimer = null;
         const FOCUSABLE_SELECTOR = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-        /* ============================================================
-         * Meta / 品牌 / 导航 / 内容渲染
-         * ============================================================ */
+        let FAQ = null;
+        let faqQuery = '';
+        let faqLastFocused = null;
+        let faqCloseTimer = null;
 
         function setMeta(attr, key, val) {
             let el = document.querySelector('meta[' + attr + '="' + key + '"]');
@@ -918,9 +1269,8 @@
                 '</div>';
         }
 
-        function renderDownloads() {
-            const c = CONTENT.downloads;
-            const cards = c.items.map(function (item, i) {
+        function downloadCardList() {
+            return CONTENT.downloads.items.map(function (item, i) {
                 const links = item.links.map(function (link, j) {
                     return '<button type="button" class="link-' + link.type + '"' +
                         ' data-download-link' +
@@ -935,27 +1285,195 @@
                         '<div class="date">' + item.date + '</div>' +
                         '<div class="links">' + links + '</div>' +
                     '</div>';
-            }).join('');
+            });
+        }
 
+        function renderDownloads() {
+            const c = CONTENT.downloads;
             return '' +
                 '<div id="page-downloads" class="page">' +
                     '<div class="other-page-content">' +
                         '<h2>' + c.title + '</h2>' +
                         '<p class="download-desc">' + c.description + '</p>' +
-                        '<div class="download-grid">' + cards + '</div>' +
+                        '<div class="download-grid">' + columnize(downloadCardList()) + '</div>' +
                     '</div>' +
                 '</div>';
         }
 
+        const narrowQuery = window.matchMedia('(max-width: 1024px)');
+
+        function isNarrow() {
+            return narrowQuery.matches;
+        }
+
+        function columnize(cards) {
+            if (isNarrow()) {
+                return cards.join('');
+            }
+            const columns = [[], []];
+            cards.forEach(function (card, index) {
+                columns[index % 2].push(card);
+            });
+            return columns.map(function (column) {
+                return '<div class="download-col">' + column.join('') + '</div>';
+            }).join('');
+        }
+
+        function refreshResponsiveLayout() {
+            const grid = document.querySelector('#page-downloads .download-grid');
+            if (grid && CONTENT) {
+                grid.innerHTML = columnize(downloadCardList());
+            }
+            renderFaqCards();
+        }
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function faqSearchIconSvg() {
+            return '<svg class="faq-search-icon" viewBox="0 0 24 24" fill="none" ' +
+                'stroke="#666666" stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+                '<circle cx="11" cy="11" r="7"></circle>' +
+                '<line x1="16.5" y1="16.5" x2="21" y2="21"></line>' +
+                '</svg>';
+        }
+
         function renderFaq() {
             const c = CONTENT.faq;
+            const placeholder = (FAQ && FAQ.searchPlaceholder) || '搜索问题关键词…';
             return '' +
                 '<div id="page-faq" class="page">' +
                     '<div class="other-page-content">' +
                         '<h2>' + c.title + '</h2>' +
-                        '<p>' + c.description + '</p>' +
+                        '<p class="download-desc">' + c.description + '</p>' +
+                        '<div class="faq-search-wrap">' +
+                            faqSearchIconSvg() +
+                            '<input id="faqSearch" class="faq-search" type="search" autocomplete="off"' +
+                                ' placeholder="' + escapeHtml(placeholder) + '" aria-label="搜索常见问题">' +
+                        '</div>' +
+                        '<div class="faq-grid" id="faqGrid"></div>' +
+                        '<p class="faq-empty" id="faqEmpty" hidden>' +
+                            escapeHtml((FAQ && FAQ.emptyText) || '没有找到匹配的问题') +
+                        '</p>' +
                     '</div>' +
                 '</div>';
+        }
+
+        function faqCardHtml(item) {
+            const meta = '' +
+                '<div class="faq-meta">' +
+                    '<span class="faq-badge">' + escapeHtml(item.version || '全部版本') + '</span>' +
+                    '<span class="faq-badge is-date">' + escapeHtml(item.date || '') + '</span>' +
+                '</div>';
+            return '' +
+                '<article class="faq-card" role="button" tabindex="0" data-faq-id="' + escapeHtml(item.id) + '"' +
+                    ' aria-haspopup="dialog">' +
+                    '<h3>' + escapeHtml(item.question || '') + '</h3>' +
+                    meta +
+                    '<p class="faq-summary">' + escapeHtml(item.summary || '') + '</p>' +
+                '</article>';
+        }
+
+        function renderFaqCards() {
+            const grid = document.getElementById('faqGrid');
+            if (!grid) return;
+
+            const items = (FAQ && Array.isArray(FAQ.items)) ? FAQ.items : [];
+            const keyword = faqQuery.trim().toLowerCase();
+
+            const matched = items.filter(function (item) {
+                if (!keyword) return true;
+                const haystack = [
+                    item.question, item.version, item.date, item.summary, item.detail,
+                    (item.tags || []).join(' ')
+                ].join(' ').toLowerCase();
+                return haystack.indexOf(keyword) !== -1;
+            });
+
+            const cards = matched.map(faqCardHtml);
+            if (isNarrow()) {
+                grid.innerHTML = cards.join('');
+            } else {
+                const columns = [[], []];
+                cards.forEach(function (card, index) {
+                    columns[index % 2].push(card);
+                });
+                grid.innerHTML = columns.map(function (column) {
+                    return '<div class="faq-col">' + column.join('') + '</div>';
+                }).join('');
+            }
+
+            const empty = document.getElementById('faqEmpty');
+            if (empty) {
+                empty.hidden = matched.length !== 0;
+            }
+        }
+
+        function openFaqModal(faqId) {
+            const modal = document.getElementById('faqModal');
+            if (!modal || !FAQ || !Array.isArray(FAQ.items)) return;
+
+            const item = FAQ.items.filter(function (entry) {
+                return String(entry.id) === String(faqId);
+            })[0];
+            if (!item) return;
+
+            if (faqCloseTimer) {
+                clearTimeout(faqCloseTimer);
+                faqCloseTimer = null;
+            }
+
+            document.getElementById('faq-modal-title').textContent = item.question || '';
+            document.getElementById('faq-modal-meta').innerHTML = '' +
+                '<span class="faq-badge">' + escapeHtml(item.version || '全部版本') + '</span>' +
+                '<span class="faq-badge is-date">' + escapeHtml(item.date || '') + '</span>';
+
+            document.getElementById('faq-modal-body').innerHTML = item.detail || '';
+            document.getElementById('faq-modal-body').scrollTop = 0;
+
+            faqLastFocused = document.activeElement;
+
+            modal.hidden = false;
+            void modal.offsetWidth;
+            modal.setAttribute('aria-hidden', 'false');
+            modal.classList.add('active');
+
+            const closeBtn = document.getElementById('faq-modal-close');
+            if (closeBtn) {
+                closeBtn.focus({ preventScroll: true });
+            }
+        }
+
+        function closeFaqModal() {
+            const modal = document.getElementById('faqModal');
+            if (!modal || !modal.classList.contains('active')) return;
+
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+
+            if (faqCloseTimer) {
+                clearTimeout(faqCloseTimer);
+            }
+            faqCloseTimer = setTimeout(function () {
+                faqCloseTimer = null;
+                modal.hidden = true;
+                modal.classList.remove('active');
+
+                if (faqLastFocused && typeof faqLastFocused.focus === 'function') {
+                    try {
+                        faqLastFocused.focus({ preventScroll: true });
+                    } catch (err) {
+                        faqLastFocused.focus();
+                    }
+                }
+                faqLastFocused = null;
+            }, 320);
         }
 
         function renderSponsor() {
@@ -981,6 +1499,7 @@
         function renderMain() {
             const main = document.getElementById('mainContent');
             main.innerHTML = renderHome() + renderDownloads() + renderFaq() + renderSponsor();
+            renderFaqCards();
         }
 
         function renderFooter() {
@@ -995,10 +1514,6 @@
         function renderModalStaticText() {
             document.querySelector('.btn-cancel').textContent = CONTENT.modal.cancelText;
         }
-
-        /* ============================================================
-         * 页面路由
-         * ============================================================ */
 
         function switchPage(pageId) {
             let targetPage = document.getElementById('page-' + pageId);
@@ -1039,9 +1554,6 @@
             focusPageHeading(targetPage);
         }
 
-        /* 只有键盘操作或手动改 hash 的跳转才把焦点移到标题。
-           鼠标点击时强行 focus 标题会让浏览器移动焦点环并重算 :hover，
-           表现为导航栏按钮附近光标样式闪烁。 */
         function focusPageHeading(page) {
             if (lastInteractionWasPointer) return;
             const h2 = page.querySelector('h2');
@@ -1053,10 +1565,6 @@
                 h2.focus();
             }
         }
-
-        /* ============================================================
-         * 下载弹窗
-         * ============================================================ */
 
         function isModalOpen(modal) {
             return modal.classList.contains('active') && !modal.classList.contains('closing');
@@ -1078,8 +1586,6 @@
             document.getElementById('modal-desc').textContent = desc;
             document.getElementById('modal-confirm-btn').textContent = tpl.confirmText;
 
-            /* 只在弹窗确实处于关闭状态时记录来源焦点，
-               否则连续点击两个下载按钮会把返回目标覆盖成刚失焦的元素 */
             if (!modal.classList.contains('active')) {
                 lastFocusedElement = document.activeElement;
             }
@@ -1095,16 +1601,12 @@
                 modalFocusTimer = null;
             }
 
-            /* 先回到无过渡的初始状态并强制一次样式刷新，再加 active，
-               保证每次都从初始透明度真实过渡进来，而不是瞬间出现后重绘 */
             modal.classList.remove('closing', 'active');
             modal.hidden = false;
             void modal.offsetWidth;
             modal.setAttribute('aria-hidden', 'false');
             modal.classList.add('active');
 
-            /* 等过渡起步后再把焦点放进弹窗（也避免鼠标点击下载按钮后，
-               焦点环在遮罩淡出的那一刻跟着重绘） */
             modalFocusTimer = setTimeout(function () {
                 modalFocusTimer = null;
                 if (!isModalOpen(modal)) return;
@@ -1125,7 +1627,6 @@
 
             modal.setAttribute('aria-hidden', 'true');
 
-            /* 先移走焦点再开始淡出：避免遮罩消失的同一帧里焦点环跟着重绘 */
             if (modal.contains(document.activeElement)) {
                 document.activeElement.blur();
             }
@@ -1137,7 +1638,6 @@
                 modal.classList.remove('active', 'closing');
                 modal.hidden = true;
 
-                /* 焦点在动画彻底结束后才还原，防止导航栏上闪出焦点环 */
                 const target = lastFocusedElement;
                 lastFocusedElement = null;
                 if (target && typeof target.focus === 'function' && document.contains(target)) {
@@ -1147,7 +1647,6 @@
                         target.focus();
                     }
                 }
-            /* 520ms > CSS 的 0.5s 过渡，确保淡出播完后再隐藏并恢复焦点 */
             }, 520);
         }
 
@@ -1157,10 +1656,6 @@
             }
             closeDownloadModal();
         }
-
-        /* ============================================================
-         * 移动端菜单
-         * ============================================================ */
 
         function toggleMenu(btn) {
             const menu = document.getElementById('navMenu');
@@ -1183,10 +1678,6 @@
             btn.classList.remove('open');
             btn.setAttribute('aria-expanded', 'false');
         }
-
-        /* ============================================================
-         * 公告轮播
-         * ============================================================ */
 
         function switchNotice(index) {
             const pages = document.querySelectorAll('.notice-page');
@@ -1221,10 +1712,6 @@
             }, 60000);
         }
 
-        /* ============================================================
-         * 事件委托
-         * ============================================================ */
-
         function bindGlobalEvents() {
             const main = document.getElementById('mainContent');
 
@@ -1253,7 +1740,39 @@
                     manualSwitchNotice(Number(dot.dataset.noticeDot));
                     return;
                 }
+
+                const faqCard = e.target.closest('[data-faq-id]');
+                if (faqCard) {
+                    openFaqModal(faqCard.dataset.faqId);
+                    return;
+                }
             });
+
+            main.addEventListener('input', function (e) {
+                if (!e.target || e.target.id !== 'faqSearch') return;
+                faqQuery = e.target.value || '';
+                renderFaqCards();
+            });
+
+            main.addEventListener('keydown', function (e) {
+                const card = e.target.closest && e.target.closest('[data-faq-id]');
+                if (!card) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openFaqModal(card.dataset.faqId);
+                }
+            });
+
+            const faqModal = document.getElementById('faqModal');
+            if (faqModal) {
+                const faqCloseBtn = document.getElementById('faq-modal-close');
+                if (faqCloseBtn) {
+                    faqCloseBtn.addEventListener('click', closeFaqModal);
+                }
+                faqModal.addEventListener('click', function (e) {
+                    if (e.target === faqModal) closeFaqModal();
+                });
+            }
 
             const modal = document.getElementById('downloadModal');
             if (modal) {
@@ -1263,6 +1782,29 @@
             }
 
             document.addEventListener('keydown', function (e) {
+                const faq = document.getElementById('faqModal');
+                if (faq && faq.classList.contains('active')) {
+                    if (e.key === 'Escape') {
+                        closeFaqModal();
+                        return;
+                    }
+                    if (e.key === 'Tab') {
+                        const list = faq.querySelectorAll(FOCUSABLE_SELECTOR);
+                        if (list.length) {
+                            const firstItem = list[0];
+                            const lastItem = list[list.length - 1];
+                            if (e.shiftKey && document.activeElement === firstItem) {
+                                e.preventDefault();
+                                lastItem.focus();
+                            } else if (!e.shiftKey && document.activeElement === lastItem) {
+                                e.preventDefault();
+                                firstItem.focus();
+                            }
+                        }
+                        return;
+                    }
+                }
+
                 const m = document.getElementById('downloadModal');
                 if (!m) return;
 
@@ -1292,13 +1834,14 @@
                 if (window.innerWidth > 1024) closeMenu();
             });
 
+            narrowQuery.addEventListener('change', refreshResponsiveLayout);
+
             window.addEventListener('hashchange', function () {
                 lastInteractionWasPointer = false;
                 const pageId = location.hash.substring(1) || 'home';
                 switchPage(pageId);
             });
 
-            /* 指针与键盘交互分开记录：鼠标点击时不要把焦点搬到标题上 */
             document.addEventListener('pointerdown', function () {
                 lastInteractionWasPointer = true;
             }, true);
@@ -1313,10 +1856,6 @@
                 }, { passive: true });
             }
         }
-
-        /* ============================================================
-         * 内容加载 + 启动
-         * ============================================================ */
 
         async function loadContent() {
             const url = './resources/inf/content.json';
@@ -1336,6 +1875,19 @@
                 '</div>';
         }
 
+        async function loadFaq() {
+            const url = './resources/inf/faq.json';
+            try {
+                const res = await fetch(url, { cache: 'no-cache' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return await res.json();
+            } catch (err) {
+
+                console.warn('[KAMC] 常见问题加载失败：' + url, err);
+                return { items: [] };
+            }
+        }
+
         async function init() {
             try {
                 CONTENT = await loadContent();
@@ -1344,6 +1896,8 @@
                 showLoadError(err);
                 return;
             }
+
+            FAQ = await loadFaq();
 
             applyMeta();
             renderBrand();
@@ -1359,7 +1913,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', init);
-    </script>
+</script>
 
 </body>
 </html>
