@@ -39,11 +39,11 @@
         "title": "KAMC 键鼠控制器",
         "description": "一款美观、易上手、功能强大的键鼠效率工具。目前已获得超过 3 万次下载，2.0.0 版本正在用 C++ 与 Qt 重构中",
         "cta": {
-          "label": "立即下载（v1.3.1 Beta）",
+          "label": "立即下载（v1.3.0）",
           "type": "lanzou",
           "platform": "蓝奏云",
-          "url": "https://wwawn.lanzouw.com/it2qW2bbdn3e",
-          "version": "v1.3.1 Beta"
+          "url": "https://wwkb.lanzoue.com/ibDhW16znnva",
+          "version": "v1.3.0"
         }
       },
       "notices": [
@@ -138,7 +138,7 @@
       "disclaimer": "⚠️ 赞助为自愿赠与，不构成购买服务或对价。感谢每一份支持！"
     },
     "footer": {
-      "copyright": "© 2026 昌龙XL | kamc.top",
+      "copyright": "© 2023-2026 昌龙XL | kamc.top",
       "bilibiliLabel": "@昌龙XL",
       "bilibiliUrl": "https://space.bilibili.com/3461574912117204",
       "tagline": "Keyboard and mouse controller 2023-2026"
