@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面不存在 · KAMC 键鼠控制器</title>
+    <meta name="description" content="KAMC 键鼠控制器：Windows 平台的键鼠连点、操作脚本与操作可视化工具，免费开源。">
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('kamc-theme');
+                var theme = (saved === 'dark' || saved === 'light') ? saved
+                    : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <link rel="icon" href="./resources/image/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="error-page">
+        <div class="error-code">404</div>
+        <div class="error-title">页面不存在</div>
+        <p class="error-text">你访问的页面可能已被移动、改名，或者从未存在过。</p>
+        <p class="error-hint">请检查地址是否输入正确，也可以从下面的入口重新开始。</p>
+        <div class="error-actions">
+            <a class="primary" href="/">返回首页</a>
+            <a href="/#downloads">下载中心</a>
+            <a href="/#faq">常见问题</a>
+        </div>
+    </div>
+</body>
+</html>
