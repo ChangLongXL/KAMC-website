@@ -130,7 +130,7 @@
     "sponsor": {
       "title": "赞助支持",
       "paragraphs": [
-        "KAMC 是我作为个人开发者从零开发的桌面工具，从 2022 年到目前已经迭代了多个版本。软件本身所有功能全部免费！并且在 github 上开源（v1 的源码都包含在下载链接中了）",
+        "KAMC 是我作为个人开发者从零开发的桌面工具，从 2023 年到目前已经迭代了多个版本。软件本身所有功能全部免费！并且在 github 上开源（v1 的源码都包含在下载链接中了）",
         "如果你觉得它帮到了你，欢迎扫码赞赏！你的支持会用于服务器费用和开发资源，也会让我更有动力继续更新 &gt;w&lt; ！"
       ],
       "qr": { "src": "./resources/image/wechat_reward.png", "alt": "微信赞赏码" },
@@ -141,7 +141,7 @@
       "copyright": "© 2026 昌龙XL | kamc.top",
       "bilibiliLabel": "@昌龙XL",
       "bilibiliUrl": "https://space.bilibili.com/3461574912117204",
-      "tagline": "Keyboard and mouse controller 2022-2026"
+      "tagline": "Keyboard and mouse controller 2023-2026"
     },
     "modal": {
       "cancelText": "取消",
