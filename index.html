@@ -23,6 +23,9 @@
 <body>
 
     <noscript>
+        <style>
+            .loading-screen { display: none !important; }
+        </style>
         <div class="nojs-notice">
             <strong>当前禁用了 JavaScript。</strong>
             本站的版本列表与常见问题由脚本从 JSON 载入，禁用后无法展示。
@@ -31,32 +34,40 @@
         </div>
     </noscript>
 
-    <header class="navbar">
-        <a class="navbar-logo" href="https://kamc.top" aria-label="返回 KAMC 首页">
-            <img class="logo-desktop" src="./resources/image/official_website_logo.png" alt="KAMC 官网">
-            <img class="logo-mobile" src="./resources/image/logo512.png" alt="KAMC 官网">
-        </a>
-
-        <div class="navbar-actions">
-            <button class="theme-toggle-mobile" id="themeToggleMobile" type="button" aria-label="切换到暗色主题" aria-pressed="false">
-                <span class="theme-icon icon-sun" aria-hidden="true"></span>
-            </button>
-            <button class="hamburger" type="button" onclick="toggleMenu(this)" aria-label="菜单" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite">
+        <div class="loading-curtain" id="loadingCurtain"></div>
+        <div class="loading-center">
+            <div class="loading-title">KAMC 键鼠控制器</div>
+            <div class="loading-track"><span class="loading-bar"></span></div>
         </div>
-
-        <nav class="navbar-links" id="navMenu">
-            <a class="nav-home" href="#home">首页</a>
-            <a class="nav-download" href="#downloads">下载</a>
-            <a class="nav-faq" href="#faq">常见问题</a>
-            <a class="nav-sponsor" href="#sponsor">赞助</a>
-        </nav>
-    </header>
+    </div>
 
     <div class="scroll-container" id="main-scroller">
+        <header class="navbar">
+            <a class="navbar-logo" href="https://kamc.top" aria-label="返回 KAMC 首页">
+                <img class="logo-desktop" src="./resources/image/official_website_logo.png" alt="KAMC 官网">
+                <img class="logo-mobile" src="./resources/image/logo512.png" alt="KAMC 官网">
+            </a>
+
+            <div class="navbar-actions">
+                <button class="theme-toggle-mobile" id="themeToggleMobile" type="button" aria-label="切换到暗色主题" aria-pressed="false">
+                    <span class="theme-icon icon-sun" aria-hidden="true"></span>
+                </button>
+                <button class="hamburger" type="button" onclick="toggleMenu(this)" aria-label="菜单" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="navbar-links" id="navMenu">
+                <a class="nav-home" href="#home">首页</a>
+                <a class="nav-download" href="#downloads">下载</a>
+                <a class="nav-faq" href="#faq">常见问题</a>
+                <a class="nav-sponsor" href="#sponsor">赞助</a>
+            </nav>
+        </header>
+
         <main class="main-content" id="mainContent">
             <section class="static-fallback">
                 <h1>KAMC 键鼠控制器</h1>

@@ -35,6 +35,20 @@
     "home": {
       "srTitle": "首页",
       "heroImage": { "src": "./resources/image/promotional_image.png", "alt": "KAMC 宣传图" },
+      "heroCopy": {
+        "note": "2.0预告：实用功能 / 键鼠连点 / 操作脚本 / 操作可视化\n免费开源 · 绿色无广\n软件本地运行，不连接互联网\n唯一作者：昌龙XL",
+        "slogans": [
+          { "text": "毫秒响应，随心掌控", "highlight": "随心" },
+          { "text": "底层驱动，极简交互", "highlight": "底层" },
+          { "text": "精准微操，突破极限", "highlight": "极限" },
+          { "text": "化繁为简，解放双手", "highlight": "解放" },
+          { "text": "拒绝繁琐，一键到位", "highlight": "一键" },
+          { "text": "无声代劳，从容制胜", "highlight": "从容" },
+          { "text": "灵动指针，游刃有余", "highlight": "灵动" },
+          { "text": "行云流水，精准制导", "highlight": "精准" },
+          { "text": "极简操控，效率觉醒", "highlight": "效率" }
+        ]
+      },
       "mainCard": {
         "title": "KAMC 键鼠控制器",
         "description": "一款美观、易上手、功能强大的键鼠效率工具。目前已获得超过 3 万次下载，2.0.0 版本正在用 C++ 与 Qt 重构中",
