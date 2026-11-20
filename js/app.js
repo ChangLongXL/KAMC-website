@@ -22,11 +22,8 @@ let faqCloseTimer = null;
 const THEME_KEY = 'kamc-theme';
 const SUN_SVG = '<span class="theme-icon icon-sun" aria-hidden="true"></span>';
 const MOON_SVG = '<span class="theme-icon icon-moon" aria-hidden="true"></span>';
-const DARK_IMAGE_NAMES = ['official_website_logo.png', 'wechat_reward.png', 'promotional_image.png'];
+const DARK_IMAGE_NAMES = ['official_website_logo.webp', 'wechat_reward.webp', 'promotional_image.webp'];
 
-/* 首页宣传语：文案放在 content.json 的 home.heroCopy.slogans 里，
-   结构为 { "text": "毫秒响应，随心掌控", "highlight": "随心" }，highlight 为高亮词。
-   这里只保留一条兜底，仅在 JSON 缺失时使用。 */
 const HERO_SLOGAN_FALLBACK = [
     { text: '毫秒响应，随心掌控', highlight: '随心' }
 ];
@@ -52,7 +49,6 @@ function sloganLineHtml(line, highlight) {
         escapeHtml(line.slice(at + hl.length));
 }
 
-/* 一条文案拆两行（按中文逗号），并把高亮词单独染色 */
 function buildSlogan(index) {
     const list = heroSloganList();
     const item = list[index] || list[0];
@@ -78,13 +74,11 @@ function pickHeroSlogan(excludeIndex) {
     return buildSlogan(idx);
 }
 
-/* 点击宣传文字：先闪 2 下，再换文字；两行固定反向进入，左右顺序每次随机 */
 function bindHeroSlogan() {
     const el = document.getElementById('heroSlogan');
     if (!el) return;
 
     el.dataset.index = String(lastSloganIndex);
-    // 清掉可能残留的换词状态
     el.classList.remove('is-blinking', 'is-swapping', 'is-swap-reverse');
 
     const swap = function () {
@@ -98,7 +92,6 @@ function bindHeroSlogan() {
             el.querySelector('.slogan-1').innerHTML = next.html1;
             el.querySelector('.slogan-2').innerHTML = next.html2;
 
-            // 随机决定哪行左、哪行右，两行始终反向
             el.classList.remove('is-blinking', 'is-swapping', 'is-swap-reverse');
             void el.offsetWidth;
             if (Math.random() < 0.5) el.classList.add('is-swap-reverse');
@@ -122,7 +115,7 @@ function currentTheme() {
 function themedImageSrc(src, theme) {
     if (!src || theme !== 'dark') return src;
     const hasDark = DARK_IMAGE_NAMES.some(function (name) { return src.indexOf(name) !== -1; });
-    return hasDark ? src.replace(/\.png(\?.*)?$/i, '@dark.png$1') : src;
+    return hasDark ? src.replace(/\.(png|webp)(\?.*)?$/i, '@dark.$1$2') : src;
 }
 
 function assignSrc(img, src) {
@@ -146,6 +139,50 @@ function syncThemeImages() {
     }
     const qr = document.querySelector('.sponsor-qr');
     if (CONTENT.sponsor) assignSrc(qr, themedImageSrc(CONTENT.sponsor.qr.src, theme));
+}
+
+const preloadedSrc = new Set();
+let preloadToken = 0;
+
+function themeImageSrcs(theme) {
+    const urls = [];
+    const push = function (item) {
+        if (item && item.src) urls.push(themedImageSrc(item.src, theme));
+    };
+    if (!CONTENT) return urls;
+    if (CONTENT.brand) {
+        push(CONTENT.brand.logoDesktop);
+        push(CONTENT.brand.logoMobile);
+    }
+    if (CONTENT.home) push(CONTENT.home.heroImage);
+    if (CONTENT.sponsor) push(CONTENT.sponsor.qr);
+    return urls;
+}
+
+function preloadImages(urls) {
+    urls.forEach(function (url) {
+        if (!url || preloadedSrc.has(url)) return;
+        preloadedSrc.add(url);
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = url;
+    });
+}
+
+function preloadInactiveTheme() {
+    const target = currentTheme() === 'dark' ? 'light' : 'dark';
+    const token = ++preloadToken;
+
+    const run = function () {
+        if (token !== preloadToken) return;
+        preloadImages(themeImageSrcs(target));
+    };
+
+    if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(run, { timeout: 3000 });
+    } else {
+        window.setTimeout(run, 1500);
+    }
 }
 
 function syncThemeUI() {
@@ -183,6 +220,7 @@ function setTheme(theme) {
 
     syncThemeUI();
     syncThemeImages();
+    preloadInactiveTheme();
 }
 
 function toggleTheme() {
@@ -382,7 +420,6 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
-/* 多行文本：转义后把换行符换成 <br>，content.json 里写 \n 即可换行 */
 function multilineHtml(value) {
     return escapeHtml(value).replace(/\r\n|\r|\n/g, '<br>');
 }
@@ -934,10 +971,6 @@ function escapeForHtml(value) {
         .replace(/>/g, '&gt;');
 }
 
-/**
- * 统一错误页：居中大标题 + 下方小字说明 + 操作按钮
- * 403 / 404 / 加载失败共用同一套结构与样式（.error-page）
- */
 function renderErrorPage(options) {
     const opts = options || {};
     const code = opts.code ? '<div class="error-code">' + escapeForHtml(opts.code) + '</div>' : '';
@@ -977,7 +1010,6 @@ async function loadFaq() {
     }
 }
 
-/* ---- 加载幕布：大字渐隐 与 45° 斜向拉开 同时开始，中途放飞首屏动画 ---- */
 const LOADING_START = Date.now();
 const LOADING_MIN_MS = 600;
 const WIPE_MS = 1000;
@@ -998,7 +1030,6 @@ function revealPage() {
     window.setTimeout(function () {
         screen.classList.add('is-fading', 'is-wiping');
 
-        // 幕布拉开到中途，下方控件开始依次进入
         window.setTimeout(revealContent, WIPE_MS / 2);
         window.setTimeout(function () {
             if (screen.parentNode) screen.parentNode.removeChild(screen);
@@ -1032,11 +1063,11 @@ async function init() {
     switchPage(pageId);
     startNoticeAutoSwitch();
     revealPage();
+    preloadInactiveTheme();
 }
 
 document.addEventListener('DOMContentLoaded', init);
 
-/* 兜底：脚本异常时也别让幕布一直挡着内容 */
 window.setTimeout(function () {
     document.documentElement.classList.add('is-revealed');
     const screen = document.getElementById('loadingScreen');

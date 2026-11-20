@@ -24,7 +24,7 @@
     --accent-soft: rgba(0, 85, 204, 0.08);
     --accent-border: rgba(0, 85, 204, 0.35);
     --progress-track: #e6e6e6;
-    --curtain-bg: #eeeeee;
+    --curtain-bg: #fcfcfc;
     --nav-bg-translucent: rgba(255, 255, 255, 0.72);
 
     --nav-home: #0055cc;
@@ -103,7 +103,7 @@
     --accent-soft: rgba(77, 141, 255, 0.16);
     --accent-border: rgba(77, 141, 255, 0.45);
     --progress-track: #2e2e2e;
-    --curtain-bg: #1b1b1b;
+    --curtain-bg: #141414;
     --nav-bg-translucent: rgba(18, 18, 18, 0.66);
 
     --nav-home: #6aa8ff;
@@ -181,7 +181,6 @@ body {
     flex-direction: column;
 }
 
-/* ---- 加载幕布 ---- */
 .loading-screen {
     position: fixed;
     inset: 0;
@@ -190,7 +189,6 @@ body {
     pointer-events: none;
 }
 
-/* 倾斜 45° 的幕布，整体沿对角线移出，形成斜向拉开 */
 .loading-curtain {
     position: absolute;
     left: -60%;
@@ -244,26 +242,25 @@ body {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 0;
+    width: 100%;
     border-radius: 999px;
     background-color: var(--accent);
+    transform-origin: left center;
     animation: loadingBar 1.2s infinite;
+    will-change: transform;
 }
 
 @keyframes loadingBar {
     0% {
-        left: 0;
-        width: 0;
+        transform: translateX(0) scaleX(0);
         animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
     }
     45% {
-        left: 0;
-        width: 100%;
+        transform: translateX(0) scaleX(1);
         animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
     }
     100% {
-        left: 100%;
-        width: 0;
+        transform: translateX(100%) scaleX(0);
     }
 }
 
@@ -291,8 +288,8 @@ body {
     padding: 0 clamp(20px, 2vw, 36px);
     box-shadow: var(--shadow-nav);
     z-index: 100;
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
-    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.25);
+    backdrop-filter: blur(24px) saturate(1.25);
 }
 
 .navbar-logo {
@@ -486,7 +483,6 @@ body {
     background-color: var(--bg);
 }
 
-/* 宣传文字：浮在图片左上空白处，不改变图片本身的位置 */
 .hero-copy {
     position: absolute;
     left: clamp(28px, 7.5vw, 150px);
@@ -510,14 +506,14 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
+    width: 100%;
     height: 100%;
     border-radius: 999px;
     background-color: var(--accent);
     overflow: hidden;
-    animation:
-        heroProgressGrow 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards,
-        heroProgressGlow 3.6s ease-in-out 1.9s infinite;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: heroProgressGrow 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
 }
 
 .hero-progress-fill::after {
@@ -532,18 +528,13 @@ body {
 }
 
 @keyframes heroProgressGrow {
-    from { width: 0; }
-    to { width: 100%; }
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
 }
 
 @keyframes heroProgressFlow {
     from { transform: translateX(-120%); }
     to { transform: translateX(260%); }
-}
-
-@keyframes heroProgressGlow {
-    0%, 100% { box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
-    50% { box-shadow: 0 0 6px var(--accent-soft); }
 }
 
 @keyframes heroCopyIn {
@@ -575,7 +566,6 @@ body {
     border-radius: 6px;
 }
 
-/* 首次进入：两行都从左往右，依次错开出现 */
 .hero-slogan .slogan-1,
 .hero-slogan .slogan-2 {
     display: block;
@@ -585,7 +575,6 @@ body {
     animation: heroCopyIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
 }
 
-/* 第一行靠边，第二行整体右移约一个字宽 */
 .hero-slogan .slogan-2 {
     margin-left: 1em;
     animation: heroCopyIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
@@ -599,7 +588,6 @@ body {
     animation: heroBlink 0.19s linear 2;
 }
 
-/* 反向进入：左右顺序由 JS 随机决定 */
 .hero-slogan.is-swapping .slogan-1 {
     animation: heroLineInLeft 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -631,7 +619,6 @@ body {
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* 宣传语下方的补充正文（可在 content.json 里改） */
 .hero-note {
     margin: clamp(34px, 3vw, 48px) 0 0;
     max-width: min(100%, 560px);
@@ -642,8 +629,6 @@ body {
     animation: heroCopyIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
 
-/* 卡片列：上下同时给定偏移 → 高度由「宣传图高度 − 上下间隙」自动算出，
-   多出来的高度全部交给公告卡片（第一张卡保持内容高度） */
 .floating-cards {
     position: absolute;
     right: clamp(30px, 3.5vw, 40px);
@@ -678,8 +663,6 @@ body {
     }
 }
 
-/* 超宽视口（浏览器缩放到 75% 时 CSS 视口约 2200px）：
-   宽度不变，只把上下间隙 / 内边距按比例放大，高度由卡片列自动撑开 */
 @media (min-width: 1900px) {
     .floating-cards {
         top: calc(2vw + 20px);
@@ -1477,7 +1460,6 @@ body {
         display: none;
     }
 
-    /* 导航栏已移入滚动容器内部（sticky），这里不再扣减它的高度 */
     .scroll-container {
         height: 100vh;
         height: 100dvh;
@@ -1562,7 +1544,6 @@ body {
     }
 }
 
-/* ===== 主题切换控件 ===== */
 .navbar-actions {
     display: flex;
     align-items: center;
@@ -1753,12 +1734,12 @@ html.theme-transition .faq-search {
     -webkit-backdrop-filter: blur(8px);
 }
 
-/* 导航栏本身已经有毛玻璃，导航链接区域不要再叠一层，
-   否则会出现一块边界生硬的不透明矩形 */
-[data-theme="dark"] .navbar-links {
-    background-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+@media (min-width: 1025px) {
+    [data-theme="dark"] .navbar-links {
+        background-color: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -1770,10 +1751,6 @@ html.theme-transition .faq-search {
         display: flex;
     }
 }
-
-/* ============================================================================
-    静态兜底 / 加载占位 / 错误页 / 无脚本提示
-   ============================================================================ */
 
 .static-fallback {
     max-width: 900px;
@@ -1861,7 +1838,6 @@ html.theme-transition .faq-search {
     color: var(--accent);
 }
 
-/* ---- 统一错误页（403 / 404 / 加载失败共用） ---- */
 .error-page {
     min-height: 100vh;
     display: flex;
@@ -1980,4 +1956,14 @@ html.is-revealed .hero-copy .hero-progress,
 html.is-revealed .hero-copy .hero-progress-fill,
 html.is-revealed .hero-banner .floating-cards {
     animation-play-state: running;
+}
+
+@media (max-width: 1024px) {
+    .navbar,
+    .navbar-links,
+    .theme-switch,
+    .modal-overlay {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
 }
